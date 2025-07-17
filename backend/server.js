@@ -4,6 +4,14 @@ import {connectDatabase} from "./config/database.js";
 
 dotenv.config({ path: "backend/config/config.env" });
 connectDatabase();
+
+// handle uncaught exceptions error
+process.on("uncaughtException", (error) => {
+  console.log("Error: ", error.message);
+  console.log("Shutting down the server due to Uncaught Exception");
+  process.exit(1);
+});
+
 const PORT = process.env.PORT || 8001;
 
 const server = app.listen(PORT, () => {
