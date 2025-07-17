@@ -25,11 +25,12 @@ export const createProduct = handleAsyncError(async (req, res, next) => {
 // ================================================================
 // This function fetches all products from the database and returns them in the response.
 export const getAllProducts = handleAsyncError(async (req, res, next) => {
+  const resultsPerPage = 3; // You can set this to any number you want
   // console.log(req.query);
-  const apiFunctionality = new ApiFunctionality(
-    Product.find(),
-    req.query
-  ).search();
+  const apiFunctionality = new ApiFunctionality(Product.find(), req.query)
+    .search()
+    .filter()
+    .pagination(resultsPerPage);
   // console.log(apiFunctionality.query);
 
   const products = await apiFunctionality.query;
