@@ -1,4 +1,5 @@
 import Product from "../models/productModel.js";
+import HandleError from "../utils/handleError.js";
 
 // ================================================================
 //            1- Create new product
@@ -35,14 +36,11 @@ export const getAllProducts = async (req, res) => {
 // ================================================================
 // This function fetches a single product by its ID from the database and returns it in the response.
 // It uses the ID from the query parameters.
-export const getSingleProduct = async (req, res) => {
+export const getSingleProduct = async (req, res, next) => {
   const product = await Product.findById(req.params.id);
 
   if (!product) {
-    return res.status(404).json({
-      success: false,
-      message: "Product not found",
-    });
+    return next(new HandleError("Product Not Found", 404));
   }
 
   return res.status(200).json({
@@ -57,23 +55,18 @@ export const getSingleProduct = async (req, res) => {
 // ================================================================
 // This function updates an existing product in the database using the ID from the request parameters and the data from the request body.
 // It returns the updated product in the response.
-export const updateProduct = async (req, res) => {
+export const updateProduct = async (req, res, next) => {
   // console.log(typeof req.params.id);
   // console.log(req.body);
-  let product = await Product.findById(req.params.id);
-
-  // console.log(product);
-  if (!product) {
-    return res.status(404).json({
-      success: false,
-      message: "Product not found",
-    });
-  }
-
-  product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+  const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
   });
+
+  // console.log(product);
+  if (!product) {
+    return next(new HandleError("Product Not Found", 404));
+  }
 
   return res.status(200).json({
     success: true,
@@ -86,18 +79,14 @@ export const updateProduct = async (req, res) => {
 //              5- Delete product
 // ================================================================
 // This function deletes a product from the database using the ID from the request parameters.
-export const deleteProduct = async (req, res) => {
-  let product = await Product.findById(req.params.id);
+export const deleteProduct = async (req, res, next) => {
+  const product = await Product.findByIdAndDelete(req.params.id);
 
   if (!product) {
-    return res.status(404).json({
-      success: false,
-      message: "Product not found",
-    });
+    return next(new HandleError("Product Not Found", 404));
   }
 
   // await product.remove();
-  product = await Product.findByIdAndDelete(req.params.id);
   // console.log(product);    // This will return the deleted product
 
   return res.status(200).json({
