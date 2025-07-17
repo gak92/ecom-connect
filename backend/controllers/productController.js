@@ -27,20 +27,43 @@ export const createProduct = handleAsyncError(async (req, res, next) => {
 export const getAllProducts = handleAsyncError(async (req, res, next) => {
   const resultsPerPage = 3; // You can set this to any number you want
   // console.log(req.query);
-  const apiFunctionality = new ApiFunctionality(Product.find(), req.query)
+  const apiFeatures = new ApiFunctionality(Product.find(), req.query)
     .search()
-    .filter()
-    .pagination(resultsPerPage);
+    .filter();
   // console.log(apiFunctionality.query);
 
-  const products = await apiFunctionality.query;
+  // Get fiitered query before pagination
+  const filteredQuery = apiFeatures.query.clone(); // Clone the query to get the filtered results before pagination
+  const productCount = await filteredQuery.countDocuments(); // Count the total number of products after filtering
+
+  // calculate the total number of pages based on filtered product count
+  const totalPages = Math.ceil(productCount / resultsPerPage);
+  const page = Number(req.query.page) || 1; // Get the current page from query or default to 1
+
+  if (page > totalPages && totalPages > 0) {
+    return next(
+      new HandleError(`Page not found. Total pages: ${totalPages}`, 404)
+    );
+  }
+
+  // Apply pagination to the query
+  apiFeatures.pagination(resultsPerPage);
+  const products = await apiFeatures.query;
   // console.log(products);
+
+  if (!products || products.length === 0) {
+    return next(new HandleError("No products found", 404));
+  }
 
   res.status(200).json({
     success: true,
     products,
     count: products.length,
     message: "All products are fetched successfully",
+    totalProducts: productCount,
+    totalPages: totalPages,
+    currentPage: page,
+    resultsPerPage: resultsPerPage,
   });
 });
 
