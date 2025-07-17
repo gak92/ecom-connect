@@ -25,14 +25,16 @@ export const createProduct = handleAsyncError(async (req, res, next) => {
 // ================================================================
 // This function fetches all products from the database and returns them in the response.
 export const getAllProducts = handleAsyncError(async (req, res, next) => {
-  
   // console.log(req.query);
-  const apiFunctionality = new ApiFunctionality(Product.find(), req.query).search();
-  console.log(apiFunctionality.query);
+  const apiFunctionality = new ApiFunctionality(
+    Product.find(),
+    req.query
+  ).search();
+  // console.log(apiFunctionality.query);
 
   const products = await apiFunctionality.query;
-  // console.log(typeof products);
-  
+  // console.log(products);
+
   res.status(200).json({
     success: true,
     products,
