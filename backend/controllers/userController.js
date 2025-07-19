@@ -86,7 +86,7 @@ export const requestPasswordReset = handleAsyncError(async (req, res, next) => {
 
   const resetPasswordURL = `http://localhost:8000/api/v1/reset/${resetToken}`;
   const message = `Use the following link to reset your password: ${resetPasswordURL}.\n\nThis link will expire in 5 minutes.\n\nIf you did not request a password reset, please ignore this email.`;
-//   console.log("MESSAGE: ", message);
+  //   console.log("MESSAGE: ", message);
 
   try {
     // send email
@@ -145,4 +145,17 @@ export const resetPassword = handleAsyncError(async (req, res, next) => {
 
   await user.save();
   sendToken(user, 200, res);
+});
+
+// ================================================================
+//            6- Get User Details
+// ================================================================
+export const getUserDetails = handleAsyncError(async (req, res, next) => {
+//   console.log(req.user.id);
+  const user = await User.findById(req.user.id);
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
 });
