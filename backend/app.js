@@ -2,11 +2,13 @@ import express from "express";
 import productRoutes from "./routes/productRoutes.js";
 import errorHandlerMiddleware from "./middleware/error.js";
 import userRoutes from "./routes/userRoutes.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
 // Middleware
 app.use(express.json()); // To parse JSON bodies
+app.use(cookieParser()); // To parse Cookies
 
 // Routes
 app.use("/api/v1", productRoutes);
