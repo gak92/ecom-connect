@@ -1,6 +1,7 @@
 import handleAsyncError from "../middleware/handleAsyncError.js";
 import User from "../models/userModel.js";
 import HandleError from "../utils/handleError.js";
+import { sendToken } from "../utils/jwtToken.js";
 
 // ================================================================
 //            1- Registering a User
@@ -17,13 +18,7 @@ export const registerUser = handleAsyncError(async (req, res, next) => {
     },
   });
 
-  const token = user.getJWTToken();
-
-  res.status(201).json({
-    success: true,
-    user,
-    token,
-  });
+  sendToken(user, 201, res);
 });
 
 // ================================================================
@@ -42,15 +37,9 @@ export const loginUser = handleAsyncError(async (req, res, next) => {
   }
 
   const isPasswordValid = await user.verifyPassword(password);
-  if(!isPasswordValid) {
+  if (!isPasswordValid) {
     return next(new HandleError("Invalid email or password", 401));
   }
 
-  const token = user.getJWTToken();
-
-  res.status(200).json({
-    success: true,
-    user,
-    token,
-  });
+  sendToken(user, 200, res);
 });
