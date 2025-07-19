@@ -11,7 +11,13 @@ import HandleError from "../utils/handleError.js";
 // This function creates a new product in the database using the data from the request body.
 // It returns the created product in the response.
 export const createProduct = handleAsyncError(async (req, res, next) => {
-  // console.log(req.body);
+  // console.log("Req body: ", req.body);
+  // console.log("Req user: ", req.user);
+  // console.log("id: ", req.user.id);
+  // console.log("_id: ", req.user._id);
+
+  req.body.user = req.user.id;
+
   const product = await Product.create(req.body);
   res.status(201).json({
     success: true,
