@@ -48,13 +48,13 @@ export const loginUser = handleAsyncError(async (req, res, next) => {
 //            3- Logout a User
 // ================================================================
 export const logout = handleAsyncError(async (req, res, next) => {
-    res.cookie("token", null, {
-        expires: new Date(Date.now()),
-        httpOnly: true,
-    })
+  res.cookie("token", null, {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
 
-    res.status(200).json({
-        success: true,
-        message: "Logout successfully"
-    })
-})
+  res.status(200).json({
+    success: true,
+    message: `Logout successfully`,
+  });
+});

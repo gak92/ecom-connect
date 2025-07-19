@@ -3,6 +3,9 @@ import HandleError from "../utils/handleError.js";
 import handleAsyncError from "./handleAsyncError.js";
 import jwt from "jsonwebtoken";
 
+// ================================================================
+//                User Authentication
+// ================================================================
 export const verifyUserAuth = handleAsyncError(async (req, res, next) => {
   const { token } = req.cookies;
   // console.log("TOKEN: ", token);
@@ -22,3 +25,20 @@ export const verifyUserAuth = handleAsyncError(async (req, res, next) => {
   req.user = await User.findById(decodedToken.id);
   next();
 });
+
+// ================================================================
+//                User Authorization
+// ================================================================
+export const roleBasedAccess = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new HandleError(
+          `Role - ${req.user.role} is not allowed to access the resource`,
+          403
+        )
+      );
+    }
+    next();
+  };
+};
