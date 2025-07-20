@@ -2,6 +2,7 @@ import express from "express";
 import {
   createProduct,
   deleteProduct,
+  getAdminAllProducts,
   getAllProducts,
   getSingleProduct,
   updateProduct,
@@ -10,14 +11,23 @@ import { roleBasedAccess, verifyUserAuth } from "../middleware/userAuth.js";
 
 const router = express.Router();
 
+// Only admin can create products.
 router
-  .route("/products")
-  .get(verifyUserAuth, getAllProducts)
+  .route("/admin/product/create")
   .post(verifyUserAuth, roleBasedAccess("admin"), createProduct);
+
+// Get all products and their details.
+router.route("/products").get(getAllProducts);
+router.route("/product/:id").get(getSingleProduct);
+
 router
-  .route("/product/:id")
+  .route("/admin/products")
+  .get(verifyUserAuth, roleBasedAccess("admin"), getAdminAllProducts);
+
+// Only admin can update and delete products.
+router
+  .route("/admin/product/:id")
   .put(verifyUserAuth, roleBasedAccess("admin"), updateProduct)
-  .delete(verifyUserAuth, roleBasedAccess("admin"), deleteProduct)
-  .get(verifyUserAuth, getSingleProduct);
+  .delete(verifyUserAuth, roleBasedAccess("admin"), deleteProduct);
 
 export default router;

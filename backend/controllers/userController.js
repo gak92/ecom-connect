@@ -195,7 +195,7 @@ export const updateProfile = handleAsyncError(async (req, res, next) => {
   const updateUserDetails = {
     name,
     email,
-  }
+  };
 
   const user = await User.findByIdAndUpdate(req.user.id, updateUserDetails, {
     new: true,
@@ -207,4 +207,4 @@ export const updateProfile = handleAsyncError(async (req, res, next) => {
     message: "User details updated successfully",
     user,
   });
-})
+});

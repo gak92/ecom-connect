@@ -7,9 +7,9 @@ import HandleError from "../utils/handleError.js";
 
 // ================================================================
 //            1- Create new product
-// ================================================================
 // This function creates a new product in the database using the data from the request body.
 // It returns the created product in the response.
+// ================================================================
 export const createProduct = handleAsyncError(async (req, res, next) => {
   // console.log("Req body: ", req.body);
   // console.log("Req user: ", req.user);
@@ -28,8 +28,8 @@ export const createProduct = handleAsyncError(async (req, res, next) => {
 
 // ================================================================
 //          2- Get all products
-// ================================================================
 // This function fetches all products from the database and returns them in the response.
+// ================================================================
 export const getAllProducts = handleAsyncError(async (req, res, next) => {
   const resultsPerPage = 3; // You can set this to any number you want
   // console.log(req.query);
@@ -75,9 +75,9 @@ export const getAllProducts = handleAsyncError(async (req, res, next) => {
 
 // ================================================================
 //            3- Get single product
-// ================================================================
 // This function fetches a single product by its ID from the database and returns it in the response.
 // It uses the ID from the query parameters.
+// ================================================================
 export const getSingleProduct = handleAsyncError(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
 
@@ -94,9 +94,9 @@ export const getSingleProduct = handleAsyncError(async (req, res, next) => {
 
 // ================================================================
 //            4- Update product
-// ================================================================
 // This function updates an existing product in the database using the ID from the request parameters and the data from the request body.
 // It returns the updated product in the response.
+// ================================================================
 export const updateProduct = handleAsyncError(async (req, res, next) => {
   // console.log(typeof req.params.id);
   // console.log(req.body);
@@ -119,8 +119,8 @@ export const updateProduct = handleAsyncError(async (req, res, next) => {
 
 // ================================================================
 //              5- Delete product
-// ================================================================
 // This function deletes a product from the database using the ID from the request parameters.
+// ================================================================
 export const deleteProduct = handleAsyncError(async (req, res, next) => {
   const product = await Product.findByIdAndDelete(req.params.id);
 
@@ -134,5 +134,19 @@ export const deleteProduct = handleAsyncError(async (req, res, next) => {
   return res.status(200).json({
     success: true,
     message: "Product deleted successfully",
+  });
+});
+
+// ================================================================
+//              6- Admin Getting all products
+//
+// ================================================================
+export const getAdminAllProducts = handleAsyncError(async (req, res, next) => {
+  const products = await Product.find();
+  res.status(200).json({
+    success: true,
+    products,
+    message: "All products are fetched successfully",
+    count: products.length,
   });
 });
