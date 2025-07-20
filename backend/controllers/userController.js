@@ -208,3 +208,15 @@ export const updateProfile = handleAsyncError(async (req, res, next) => {
     user,
   });
 });
+
+// ================================================================
+//            7- Admin Getting Users Information
+// ================================================================
+export const getUsersList = handleAsyncError(async (req, res, next) => {
+  const users = await User.find();
+
+  res.status(200).json({
+    success: true,
+    users,
+  });
+});
