@@ -138,8 +138,51 @@ export const deleteProduct = handleAsyncError(async (req, res, next) => {
 });
 
 // ================================================================
-//              6- Admin Getting all products
-//
+//              6- Creating and Updating Product Review
+// ================================================================
+export const createProductReview = handleAsyncError(async (req, res, next) => {
+  const { rating, comment, productId } = req.body;
+  const review = {
+    user: req.user._id,
+    name: req.user.name,
+    rating: Number(rating),
+    comment,
+  };
+
+  const product = await Product.findById(productId);
+  const reviewExists = product.reviews.find(
+    (review) => review.user.toString() === req.user.id
+  );
+  console.log(reviewExists);
+  if (reviewExists) {
+    product.reviews.forEach((review) => {
+      if (review.user.toString() === req.user.id) {
+        review.rating = Number(rating);
+        review.comment = comment;
+      }
+    });
+  } else {
+    product.reviews.push(review);
+  }
+  product.numOfReviews = product.reviews.length;
+
+  let totalRating = 0;
+  product.reviews.forEach((review) => {
+    totalRating += review.rating;
+  });
+  product.ratings =
+    product.reviews.length > 0 ? totalRating / product.reviews.length : 0;
+
+  await product.save({ validateBeforeSave: false });
+  return res.status(200).json({
+    success: true,
+    product,
+    message: "Product review created or updated successfully",
+  });
+});
+
+// ================================================================
+//              7- Admin Getting all products
 // ================================================================
 export const getAdminAllProducts = handleAsyncError(async (req, res, next) => {
   const products = await Product.find();
