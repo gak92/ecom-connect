@@ -220,3 +220,18 @@ export const getUsersList = handleAsyncError(async (req, res, next) => {
     users,
   });
 });
+
+// ================================================================
+//            8- Admin Getting Single User Information
+// ================================================================
+export const getSingleUser = handleAsyncError(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+  if (!user) {
+    return next(new HandleError(`User does not exist with the id: ${req.params.id}`, 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
+});
