@@ -227,7 +227,33 @@ export const getUsersList = handleAsyncError(async (req, res, next) => {
 export const getSingleUser = handleAsyncError(async (req, res, next) => {
   const user = await User.findById(req.params.id);
   if (!user) {
-    return next(new HandleError(`User does not exist with the id: ${req.params.id}`, 404));
+    return next(
+      new HandleError(`User does not exist with the id: ${req.params.id}`, 404)
+    );
+  }
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
+});
+
+// ================================================================
+//            8- Admin Change user role
+// ================================================================
+export const updateUserRole = handleAsyncError(async (req, res, next) => {
+  const { role } = req.body;
+  const newUserData = { role };
+
+  const user = await User.findByIdAndUpdate(req.params.id, newUserData, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!user) {
+    return next(
+      new HandleError(`User does not exist with the id: ${req.params.id}`, 404)
+    );
   }
 
   res.status(200).json({
