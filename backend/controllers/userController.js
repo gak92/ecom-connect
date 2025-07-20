@@ -151,7 +151,7 @@ export const resetPassword = handleAsyncError(async (req, res, next) => {
 //            6- Get User Details
 // ================================================================
 export const getUserDetails = handleAsyncError(async (req, res, next) => {
-//   console.log(req.user.id);
+  //   console.log(req.user.id);
   const user = await User.findById(req.user.id);
 
   res.status(200).json({
@@ -159,3 +159,35 @@ export const getUserDetails = handleAsyncError(async (req, res, next) => {
     user,
   });
 });
+
+// ================================================================
+//            6- Update Password
+// ================================================================
+export const updatePassword = handleAsyncError(async (req, res, next) => {
+  const { currentPassword, newPassword, confirmPassword } = req.body;
+  if (!currentPassword || !newPassword || !confirmPassword) {
+    return next(new HandleError("All fields are required", 400));
+  }
+
+  const user = await User.findById(req.user.id).select("+password");
+  if (!user) {
+    return next(new HandleError("User not found", 404));
+  }
+
+  const checkCurrentPassword = await user.verifyPassword(currentPassword);
+  if (!checkCurrentPassword) {
+    return next(new HandleError("Current password is incorrect", 401));
+  }
+
+  if (newPassword !== confirmPassword) {
+    return next(new HandleError("Passwords do not match", 400));
+  }
+  user.password = newPassword;
+  user.save();
+  sendToken(user, 200, res);
+});
+
+// ================================================================
+//            6- Update User Profile (details)
+// ================================================================
+export const updateProfile = handleAsyncError(async (req, res, next) => {})
