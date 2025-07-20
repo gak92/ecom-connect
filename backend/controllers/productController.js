@@ -182,7 +182,27 @@ export const createProductReview = handleAsyncError(async (req, res, next) => {
 });
 
 // ================================================================
-//              7- Admin Getting all products
+//              7- Getting Product Review
+// ================================================================
+export const getProductReviews = handleAsyncError(async (req, res, next) => {
+  const product = await Product.findById(req.query.id);
+  if (!product) {
+    return next(new HandleError("Product Not Found", 404));
+  }
+  res.status(200).json({
+    success: true,
+    reviews: product.reviews,
+    message: "Product reviews fetched successfully",
+  });
+});
+
+
+// ================================================================
+//              8- Deleting Product Review
+// ================================================================
+
+// ================================================================
+//              9- Admin Getting all products
 // ================================================================
 export const getAdminAllProducts = handleAsyncError(async (req, res, next) => {
   const products = await Product.find();

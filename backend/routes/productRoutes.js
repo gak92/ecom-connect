@@ -5,6 +5,7 @@ import {
   deleteProduct,
   getAdminAllProducts,
   getAllProducts,
+  getProductReviews,
   getSingleProduct,
   updateProduct,
 } from "../controllers/productController.js";
@@ -33,5 +34,6 @@ router
 
 // create a review for a product
 router.route("/review").put(verifyUserAuth, createProductReview);
+router.route("/reviews").get(getProductReviews);
 
 export default router;
