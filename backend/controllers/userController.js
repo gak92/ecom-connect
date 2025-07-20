@@ -190,4 +190,21 @@ export const updatePassword = handleAsyncError(async (req, res, next) => {
 // ================================================================
 //            6- Update User Profile (details)
 // ================================================================
-export const updateProfile = handleAsyncError(async (req, res, next) => {})
+export const updateProfile = handleAsyncError(async (req, res, next) => {
+  const { name, email } = req.body;
+  const updateUserDetails = {
+    name,
+    email,
+  }
+
+  const user = await User.findByIdAndUpdate(req.user.id, updateUserDetails, {
+    new: true,
+    runValidators: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "User details updated successfully",
+    user,
+  });
+})
