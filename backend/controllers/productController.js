@@ -196,10 +196,40 @@ export const getProductReviews = handleAsyncError(async (req, res, next) => {
   });
 });
 
-
 // ================================================================
 //              8- Deleting Product Review
 // ================================================================
+export const deleteProductReview = handleAsyncError(async (req, res, next) => {
+  const product = await Product.findById(req.query.productId);
+  if (!product) {
+    return next(new HandleError("Product Not Found", 404));
+  }
+
+  const reviews = product.reviews.filter(
+    (review) => review._id.toString() !== req.query.id.toString()
+  );
+  let totalRating = 0;
+  reviews.forEach((review) => {
+    totalRating += review.rating;
+  });
+  const ratings = reviews.length > 0 ? totalRating / reviews.length : 0;
+  const numOfReviews = reviews.length;
+  await Product.findByIdAndUpdate(
+    req.query.productId,
+    {
+      reviews,
+      numOfReviews,
+      ratings,
+    },
+    { new: true, runValidators: true }
+  );
+
+  return res.status(200).json({
+    success: true,
+    product,
+    message: "Product review deleted successfully",
+  });
+});
 
 // ================================================================
 //              9- Admin Getting all products

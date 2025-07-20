@@ -3,6 +3,7 @@ import {
   createProduct,
   createProductReview,
   deleteProduct,
+  deleteProductReview,
   getAdminAllProducts,
   getAllProducts,
   getProductReviews,
@@ -34,6 +35,9 @@ router
 
 // create a review for a product
 router.route("/review").put(verifyUserAuth, createProductReview);
-router.route("/reviews").get(getProductReviews);
+router
+  .route("/reviews")
+  .get(getProductReviews)
+  .delete(verifyUserAuth, deleteProductReview);
 
 export default router;
