@@ -117,7 +117,7 @@ export const updateOrderStatus = handleAsyncError(async (req, res, next) => {
     order.deliveredAt = Date.now();
   }
 
-  await order.save({validateBeforeSave: false});
+  await order.save({ validateBeforeSave: false });
 
   res.status(200).json({
     success: true,
@@ -147,7 +147,17 @@ export const deleteOrder = handleAsyncError(async (req, res, next) => {
   if (!order) {
     return next(new HandleError("Order Not Found", 404));
   }
-  await Order.deleteOne({ _id: req.params.id  });
+
+  if (order.orderStatus !== "Delivered") {
+    return next(
+      new HandleError(
+        "Only delivered orders can be deleted, Order still in processing",
+        400
+      )
+    );
+  }
+
+  await Order.deleteOne({ _id: req.params.id });
   res.status(200).json({
     success: true,
     message: "Order deleted successfully",
