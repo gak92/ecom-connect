@@ -2,6 +2,7 @@ import express from "express";
 import { roleBasedAccess, verifyUserAuth } from "../middleware/userAuth.js";
 import {
   createNewOrder,
+  getAdminAllOrders,
   getAllMyOrders,
   getSingleOrder,
 } from "../controllers/orderController.js";
@@ -12,7 +13,8 @@ router
   .route("/admin/order/:id")
   .get(verifyUserAuth, roleBasedAccess("admin"), getSingleOrder);
 router
-  .route("/orders/user")
-  .get(verifyUserAuth, getAllMyOrders);
+  .route("/admin/orders")
+  .get(verifyUserAuth, roleBasedAccess("admin"), getAdminAllOrders);
+router.route("/orders/user").get(verifyUserAuth, getAllMyOrders);
 
 export default router;

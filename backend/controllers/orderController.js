@@ -55,7 +55,7 @@ export const getSingleOrder = handleAsyncError(async (req, res, next) => {
 });
 
 // ================================================================
-//            2- Get All My Orders
+//            3- Get All My Orders
 // ================================================================
 export const getAllMyOrders = handleAsyncError(async (req, res, next) => {
   const orders = await Order.find({ user: req.user._id }).populate("user", "name email");
@@ -63,5 +63,25 @@ export const getAllMyOrders = handleAsyncError(async (req, res, next) => {
     success: true,
     orders,
     message: "All My Orders fetched successfully",
+  });
+});
+
+// ================================================================
+//            4- Admin Get All Orders
+// ================================================================
+export const getAdminAllOrders = handleAsyncError(async (req, res, next) => {
+  const orders = await Order.find();
+
+  let totalAmount = 0;
+  orders.forEach((order) => {
+    totalAmount += order.totalPrice;
+  });
+
+  res.status(200).json({
+    success: true,
+    orders,
+    message: "All Orders fetched successfully",
+    totalAmount,
+    count: orders.length,
   });
 });
