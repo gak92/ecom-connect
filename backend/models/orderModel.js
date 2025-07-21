@@ -52,6 +52,12 @@ const orderSchema = new Schema({
       },
     },
   ],
+  orderStatus: {
+    type: String,
+    required: true,
+    default: "Processing",
+    // enum: ["Pending", "Processing", "Shipped", "Delivered", "Cancelled"],
+  },
   user: {
     type: mongoose.Schema.ObjectId,
     ref: "User",

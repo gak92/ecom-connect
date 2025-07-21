@@ -43,7 +43,10 @@ export const createNewOrder = handleAsyncError(async (req, res, next) => {
 //            2- Get Single order
 // ================================================================
 export const getSingleOrder = handleAsyncError(async (req, res, next) => {
-  const order = await Order.findById(req.params.id).populate("user", "name email");
+  const order = await Order.findById(req.params.id).populate(
+    "user",
+    "name email"
+  );
   if (!order) {
     return next(new HandleError("Order Not Found", 404));
   }
@@ -51,14 +54,17 @@ export const getSingleOrder = handleAsyncError(async (req, res, next) => {
     success: true,
     order,
     message: "Single Order fetched successfully",
-  });  
+  });
 });
 
 // ================================================================
 //            3- Get All My Orders
 // ================================================================
 export const getAllMyOrders = handleAsyncError(async (req, res, next) => {
-  const orders = await Order.find({ user: req.user._id }).populate("user", "name email");
+  const orders = await Order.find({ user: req.user._id }).populate(
+    "user",
+    "name email"
+  );
   res.status(200).json({
     success: true,
     orders,
@@ -85,3 +91,50 @@ export const getAdminAllOrders = handleAsyncError(async (req, res, next) => {
     count: orders.length,
   });
 });
+
+// ================================================================
+//            5- Admin Get  Orders
+// ================================================================
+export const updateOrderStatus = handleAsyncError(async (req, res, next) => {
+  const order = await Order.findById(req.params.id);
+  if (!order) {
+    return next(new HandleError("Order Not Found", 404));
+  }
+
+  if (order.orderStatus === "Delivered") {
+    return next(new HandleError("Order already delivered", 400));
+  }
+
+  await Promise.all(
+    order.orderItems.map((item) => {
+      // console.log("Item: ", item);
+      updateQuantity(item.product, item.quantity);
+    })
+  );
+
+  order.orderStatus = req.body.status;
+  if (order.orderStatus === "Delivered") {
+    order.deliveredAt = Date.now();
+  }
+
+  await order.save({validateBeforeSave: false});
+
+  res.status(200).json({
+    success: true,
+    order,
+    message: "Order status updated successfully",
+  });
+});
+
+// ================================================================
+//            5a- Update Stock Quantity
+// ================================================================
+async function updateQuantity(productId, quantity) {
+  const product = await Product.findById(productId);
+  if (!product) {
+    throw new HandleError("Product Not Found", 404);
+  }
+
+  product.stock -= quantity;
+  await product.save({ validateBeforeSave: false });
+}
