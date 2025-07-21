@@ -53,3 +53,15 @@ export const getSingleOrder = handleAsyncError(async (req, res, next) => {
     message: "Single Order fetched successfully",
   });  
 });
+
+// ================================================================
+//            2- Get All My Orders
+// ================================================================
+export const getAllMyOrders = handleAsyncError(async (req, res, next) => {
+  const orders = await Order.find({ user: req.user._id }).populate("user", "name email");
+  res.status(200).json({
+    success: true,
+    orders,
+    message: "All My Orders fetched successfully",
+  });
+});
