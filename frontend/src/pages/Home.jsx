@@ -11,7 +11,7 @@ const products = [
     name: "Fantastic Plastic Shirt",
     description: "Chicken",
     price: 598.2,
-    ratings: 0,
+    ratings: 3,
     image: [
       {
         public_id: "d4b7df3f-46dc-4dd5-888f-823c6a33574b",
@@ -21,7 +21,7 @@ const products = [
     ],
     category: "Practical",
     stock: "0",
-    numOfReviews: 0,
+    numOfReviews: 1,
     reviews: [],
     createdAt: "2025-07-17T11:01:39.728Z",
     updatedAt: "2025-07-21T12:33:01.247Z",
@@ -32,7 +32,7 @@ const products = [
     name: "Fantastic Wooden Shirt",
     description: "Soap",
     price: 300.43,
-    ratings: 0,
+    ratings: 1.5,
     image: [
       {
         public_id: "f388aabb-5d04-42dd-b36b-a33b6cf32868",
@@ -42,7 +42,7 @@ const products = [
     ],
     category: "Handmade",
     stock: "1",
-    numOfReviews: 0,
+    numOfReviews: 3,
     reviews: [],
     createdAt: "2025-07-17T11:01:42.161Z",
     updatedAt: "2025-07-17T11:01:42.161Z",
@@ -53,7 +53,7 @@ const products = [
     name: "Gorgeous Frozen Pants",
     description: "Computer",
     price: 183.51,
-    ratings: 0,
+    ratings: 4.2,
     image: [
       {
         public_id: "e73306a3-4ee8-42df-9ad3-9a242b5de6f6",
