@@ -6,8 +6,9 @@ import ImageSlider from "../components/ImageSlider";
 import Product from "../components/Product";
 import PageTitle from "../components/PageTitle";
 import { useSelector, useDispatch } from "react-redux";
-import { getProduct } from "../features/products/productSlice";
+import { getProduct, removeError } from "../features/products/productSlice";
 import Loader from "../components/Loader";
+import { toast } from "react-toastify";
 
 // const products = [
 //   {
@@ -86,6 +87,16 @@ function Home() {
   useEffect(() => {
     dispatch(getProduct());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error.message, {
+        position: "top-center",
+        autoClose: 3000,
+      });
+      dispatch(removeError());
+    }
+  }, [dispatch, error]);
 
   return (
     <>
