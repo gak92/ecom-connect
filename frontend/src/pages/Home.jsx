@@ -7,6 +7,7 @@ import Product from "../components/Product";
 import PageTitle from "../components/PageTitle";
 import { useSelector, useDispatch } from "react-redux";
 import { getProduct } from "../features/products/productSlice";
+import Loader from "../components/Loader";
 
 // const products = [
 //   {
@@ -88,18 +89,24 @@ function Home() {
 
   return (
     <>
-      <PageTitle title="Home - MERN Ecommerce" />
-      <Navbar />
-      <ImageSlider />
-      <div className="home-container">
-        <h2 className="home-heading">Trending Now</h2>
-        <div className="home-product-container">
-          {products.map((product, index) => (
-            <Product product={product} key={index} />
-          ))}
-        </div>
-      </div>
-      <Footer />
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <PageTitle title="Home - MERN Ecommerce" />
+          <Navbar />
+          <ImageSlider />
+          <div className="home-container">
+            <h2 className="home-heading">Trending Now</h2>
+            <div className="home-product-container">
+              {products.map((product, index) => (
+                <Product product={product} key={index} />
+              ))}
+            </div>
+          </div>
+          <Footer />
+        </>
+      )}
     </>
   );
 }

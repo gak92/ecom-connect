@@ -7,7 +7,7 @@ export const getProduct = createAsyncThunk(
     try {
       const link = "/api/v1/products";
       const {data} = await axios.get(link);
-      console.log("Response: ", data);
+    //   console.log("Response: ", data);
       return data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "An error occurred");
