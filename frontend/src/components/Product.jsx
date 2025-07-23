@@ -17,7 +17,7 @@ function Product({ product }) {
         <img src={product.image[0].url} alt={product.name} className="product-image-card"/>
         <div className="product-details">
           <h3 className="product-title">{product.name}</h3>
-          <p className="product-price">
+          <p className="home-price">
             <strong>Price: </strong>
             {product.price}/=
           </p>

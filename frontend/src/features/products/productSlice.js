@@ -4,9 +4,11 @@ import axios from "axios";
 // Fetching all products
 export const getProduct = createAsyncThunk(
   "product/getProduct",
-  async (_, { rejectWithValue }) => {
+  async ({ keyword }, { rejectWithValue }) => {
     try {
-      const link = "/api/v1/products";
+      const link = keyword
+        ? `/api/v1/products?keyword=${encodeURIComponent(keyword)}`
+        : "/api/v1/products";
       const { data } = await axios.get(link);
       //   console.log("Response: ", data);
       return data;
@@ -62,6 +64,7 @@ const productSlice = createSlice({
         // console.log("Rejected Action: ", action.payload);
         state.loading = false;
         state.error = action.payload || "Something went wrong";
+        state.products = [];
       });
 
     builder
