@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../pageStyles/Products.css";
 import PageTitle from "../components/PageTitle";
 import Navbar from "../components/Navbar";
@@ -9,11 +9,14 @@ import { getProduct } from "../features/products/productSlice";
 import { toast } from "react-toastify";
 import { removeError } from "../features/products/productSlice";
 import Loader from "../components/Loader";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import NoProduct from "../components/NoProduct";
+import Pagination from "../components/Pagination";
 
 function Products() {
-  const { loading, error, products, resultPerPage, productCount } = useSelector((state) => state.product);
+  const { loading, error, products, resultPerPage, productCount } = useSelector(
+    (state) => state.product
+  );
   console.log(products); // Display products in console for debugging purposes.
   const dispatch = useDispatch();
 
@@ -23,9 +26,13 @@ function Products() {
   const keyword = searchParams.get("keyword");
   console.log(keyword); // Display keyword in console for debugging purposes.
 
+  const pageFromURL = parseInt(searchParams.get("page"), 10) || 1;
+  const [currentPage, setCurrentPage] = useState(pageFromURL);
+  const navigate = useNavigate();
+
   useEffect(() => {
-    dispatch(getProduct({ keyword }));
-  }, [dispatch, keyword]);
+    dispatch(getProduct({ keyword, page: currentPage }));
+  }, [dispatch, keyword, currentPage]);
 
   useEffect(() => {
     if (error) {
@@ -38,6 +45,19 @@ function Products() {
   }, [dispatch, error]);
 
   console.log(products.length);
+
+  const handlePageChange = (page) => {
+    if (page !== currentPage) {
+      setCurrentPage(page);
+      const newSearchParams = new URLSearchParams(location.search);
+      if (page === 1) {
+        newSearchParams.delete("page");
+      } else {
+        newSearchParams.set("page", page);
+      }
+      navigate(`?${newSearchParams.toString()}`);
+    }
+  };
 
   return (
     <>
@@ -63,6 +83,10 @@ function Products() {
               ) : (
                 <NoProduct keyword={keyword} />
               )}
+              <Pagination
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+              />
             </div>
           </div>
 
