@@ -110,8 +110,8 @@ function Home() {
           <div className="home-container">
             <h2 className="home-heading">Trending Now</h2>
             <div className="home-product-container">
-              {products.map((product, index) => (
-                <Product product={product} key={index} />
+              {products.map((product) => (
+                <Product product={product} key={product._id} />
               ))}
             </div>
           </div>
