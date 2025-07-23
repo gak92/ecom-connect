@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Rating from "./Rating";
 
 function Product({ product }) {
+  // console.log(product._id);
   const [rating, setRating] = useState(0);
 
   const handleRatingChange = (newRating) => {
@@ -12,7 +13,7 @@ function Product({ product }) {
   };
 
   return (
-    <Link to={`/products/${product._id}`} className="product_id">
+    <Link to={`/product/${product._id}`} className="product_id">
       <div className="product-card">
         <img src={product.image[0].url} alt={product.name} className="product-image-card"/>
         <div className="product-details">
@@ -33,7 +34,7 @@ function Product({ product }) {
             {product.numOfReviews === 1 ? "Review" : "Reviews"})
           </span>
 
-          <button className="add-to-cart">View Details</button>
+          {/* <button className="add-to-cart">View Details</button> */}
         </div>
       </div>
     </Link>
