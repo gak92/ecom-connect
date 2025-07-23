@@ -13,7 +13,7 @@ import { useLocation } from "react-router-dom";
 import NoProduct from "../components/NoProduct";
 
 function Products() {
-  const { loading, error, products } = useSelector((state) => state.product);
+  const { loading, error, products, resultPerPage, productCount } = useSelector((state) => state.product);
   console.log(products); // Display products in console for debugging purposes.
   const dispatch = useDispatch();
 
