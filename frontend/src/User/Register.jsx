@@ -3,7 +3,11 @@ import "../UserStyles/Form.css";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { register, removeErrors, removeSuccess } from "../features/user/userSlice.js";
+import {
+  register,
+  removeErrors,
+  removeSuccess,
+} from "../features/user/userSlice.js";
 
 function Register() {
   const [user, setUser] = useState({ name: "", email: "", password: "" });
@@ -45,10 +49,10 @@ function Register() {
     }
 
     const myForm = new FormData();
-    myForm.set("name", name);
-    myForm.set("email", email);
-    myForm.set("password", password);
-    myForm.set("avatar", avatar);
+    myForm.append("name", name);
+    myForm.append("email", email);
+    myForm.append("password", password);
+    myForm.append("avatar", avatar);
     console.log(typeof myForm);
 
     for (let pair of myForm.entries()) {
@@ -68,7 +72,7 @@ function Register() {
     }
   }, [dispatch, error]);
 
-   useEffect(() => {
+  useEffect(() => {
     if (success) {
       toast.success("Registration successful", {
         position: "top-center",
@@ -78,7 +82,6 @@ function Register() {
       navigate("/login");
     }
   }, [dispatch, success]);
-
 
   return (
     <div className="form-container container">
@@ -128,7 +131,7 @@ function Register() {
           </div>
           <button className="authBtn">Sign Up</button>
           <p className="form-links">
-            Already have an account? <Link>Sign In here</Link>
+            Already have an account? <Link to="/login">Sign In here</Link>
           </p>
         </form>
       </div>
