@@ -11,16 +11,41 @@ export const register = createAsyncThunk(
           "Content-Type": "multipart/form-data",
         },
       };
+      console.log("Register request: ", userData);
+
+      // const tempUserData = {
+      //   name: "three",
+      //   email: "three@example.com",
+      //   password: "123456789",
+      // }
+
       const { data } = await axios.post("/api/v1/register", userData, config);
+    // const {data} = await axios.postForm("/api/v1/register", userData);
       console.log("Register response: ", data);
       return data;
     } catch (error) {
+      console.log("Register error: ", error);
       return rejectWithValue(
         error.response?.data || "Registration failed, please try again later"
       );
     }
   }
 );
+
+// export const register=createAsyncThunk('user/register',async (userData,{rejectWithValue})=>{
+//     try{
+//         const config={
+//             headers:{
+//                 'Content-Type':'multipart/form-data'
+//             }
+//         }
+//     const {data}=await axios.post('/api/v1/register',userData,config)
+//     return data
+    
+//     }catch(error){
+//         return rejectWithValue(error.response?.data || 'Registration failed. Please try again later')
+//     }
+// })
 
 const userSlice = createSlice({
   name: "user",

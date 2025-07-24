@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../UserStyles/Form.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { register, removeErrors, removeSuccess } from "../features/user/userSlice.js";
 
 function Register() {
   const [user, setUser] = useState({ name: "", email: "", password: "" });
@@ -10,10 +12,14 @@ function Register() {
   const [avatar, setAvatar] = useState("");
   const [avatarPreview, setAvatarPreview] = useState("./images/profile.png");
 
+  const { success, loading, error } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const registerDataChange = (e) => {
     if (e.target.name === "avatar") {
       const reader = new FileReader();
-      console.log("File: ", e.target.files[0]);
+      // console.log("File: ", e.target.files[0]);
 
       reader.onloadend = () => {
         if (reader.readyState === 2) {
@@ -43,12 +49,36 @@ function Register() {
     myForm.set("email", email);
     myForm.set("password", password);
     myForm.set("avatar", avatar);
-    // console.log(myForm.entries());
+    console.log(typeof myForm);
 
     for (let pair of myForm.entries()) {
-      console.log(pair[0] + " " + pair[1]);
+      console.log(pair);
     }
+
+    dispatch(register(myForm));
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 3000,
+      });
+      dispatch(removeErrors());
+    }
+  }, [dispatch, error]);
+
+   useEffect(() => {
+    if (success) {
+      toast.success("Registration successful", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+      dispatch(removeSuccess());
+      navigate("/login");
+    }
+  }, [dispatch, success]);
+
 
   return (
     <div className="form-container container">

@@ -9,6 +9,7 @@ import crypto from "crypto";
 //            1- Registering a User
 // ================================================================
 export const registerUser = handleAsyncError(async (req, res, next) => {
+  console.log("Req body: ", req.body);
   const { name, email, password } = req.body;
   const user = await User.create({
     name,
