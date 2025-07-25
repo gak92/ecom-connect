@@ -22,11 +22,14 @@ function UserDashboard({ user }) {
   }
 
   function orders() {
-    navigate("/orders/user", { replace: true });
+    // navigate("/orders/user", { replace: true });
+    navigate("/orders/user");
+    setMenuVisible(false);
   }
 
   function profile() {
     navigate("/profile");
+    setMenuVisible(false);
   }
 
   function logoutUser() {
