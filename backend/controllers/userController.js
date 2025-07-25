@@ -93,7 +93,9 @@ export const requestPasswordReset = handleAsyncError(async (req, res, next) => {
     );
   }
 
-  const resetPasswordURL = `http://localhost:8000/api/v1/reset/${resetToken}`;
+  const resetPasswordURL = `${req.protocol}://${req.get(
+    "host"
+  )}/reset/${resetToken}`;
   const message = `Use the following link to reset your password: ${resetPasswordURL}.\n\nThis link will expire in 5 minutes.\n\nIf you did not request a password reset, please ignore this email.`;
   //   console.log("MESSAGE: ", message);
 
