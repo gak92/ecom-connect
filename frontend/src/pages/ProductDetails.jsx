@@ -12,6 +12,8 @@ import {
 } from "../features/products/productSlice";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
+import { addItemsToCart, removeMessage } from "../features/cart/cartSlice";
+import { Cast } from "@mui/icons-material";
 
 function ProductDetails() {
   const [userRating, setUserRating] = useState(0);
@@ -22,15 +24,23 @@ function ProductDetails() {
   const { loading, error, product } = useSelector((state) => state.product);
   const dispatch = useDispatch();
   const { id } = useParams();
-  console.log("Product: ", product);
+  console.log("Product Details: ", product);
 
   const [quantity, setQuantity] = useState(1);
+  const {
+    loading: cartLoading,
+    error: cartError,
+    success: cartSuccess,
+    message,
+    cartItems,
+  } = useSelector((state) => state.cart);
+
+  console.log("Cart Items: ", cartItems);
 
   useEffect(() => {
     if (id) {
       dispatch(getProductDetails(id));
     }
-
     return () => {
       dispatch(removeError());
     };
@@ -45,7 +55,23 @@ function ProductDetails() {
       });
       dispatch(removeError());
     }
-  }, [dispatch, error]);
+    if (cartError) {
+      toast.error(cartError, {
+        position: "top-center",
+        autoClose: 3000,
+      });
+    }
+  }, [dispatch, error, cartError]);
+
+  useEffect(() => {
+    if(cartSuccess) {
+      toast.success(message, {
+        position: "top-center",
+        autoClose: 3000,
+      });
+      dispatch(removeMessage());
+    }
+  }, [dispatch, cartSuccess, message]);
 
   const decreaseQuantity = () => {
     if (quantity <= 1) {
@@ -69,6 +95,10 @@ function ProductDetails() {
       return;
     }
     setQuantity((qty) => qty + 1);
+  };
+
+  const addToCart = () => {
+    dispatch(addItemsToCart({ id, quantity }));
   };
 
   if (loading) {
@@ -151,7 +181,13 @@ function ProductDetails() {
                     +
                   </button>
                 </div>
-                <button className="add-to-cart-btn">Add to Cart</button>
+                <button
+                  className="add-to-cart-btn"
+                  onClick={addToCart}
+                  disabled={cartLoading}
+                >
+                  {cartLoading ? "Loading..." : "Add to Cart"}
+                </button>
               </>
             )}
 
