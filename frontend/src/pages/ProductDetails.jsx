@@ -24,6 +24,8 @@ function ProductDetails() {
   const { id } = useParams();
   console.log("Product: ", product);
 
+  const [quantity, setQuantity] = useState(1);
+
   useEffect(() => {
     if (id) {
       dispatch(getProductDetails(id));
@@ -44,6 +46,30 @@ function ProductDetails() {
       dispatch(removeError());
     }
   }, [dispatch, error]);
+
+  const decreaseQuantity = () => {
+    if (quantity <= 1) {
+      toast.error("Cannot decrease quantity. Minimum quantity reached!", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+      dispatch(removeError());
+      return;
+    }
+    setQuantity((qty) => qty - 1);
+  };
+
+  const increaseQuantity = () => {
+    if (product.stock <= quantity) {
+      toast.error("Cannot increase quantity. Out of stock!", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+      dispatch(removeError());
+      return;
+    }
+    setQuantity((qty) => qty + 1);
+  };
 
   if (loading) {
     return (
@@ -106,14 +132,24 @@ function ProductDetails() {
               <>
                 <div className="quantity-controls">
                   <span className="quantity-label">Quantity: </span>
-                  <button className="quantity-button">-</button>
+                  <button
+                    className="quantity-button"
+                    onClick={decreaseQuantity}
+                  >
+                    -
+                  </button>
                   <input
                     type="text"
-                    value={1}
+                    value={quantity}
                     className="quantity-value"
                     readOnly
                   />
-                  <button className="quantity-button">+</button>
+                  <button
+                    className="quantity-button"
+                    onClick={increaseQuantity}
+                  >
+                    +
+                  </button>
                 </div>
                 <button className="add-to-cart-btn">Add to Cart</button>
               </>
