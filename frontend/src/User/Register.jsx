@@ -31,6 +31,9 @@ function Register() {
           setAvatar(reader.result);
         }
       };
+      reader.onerror = (error) => {
+        toast.error("Error in reading file", error);
+      };
       reader.readAsDataURL(e.target.files[0]);
     } else {
       setUser({ ...user, [e.target.name]: e.target.value });
