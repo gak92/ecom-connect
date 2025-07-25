@@ -171,6 +171,32 @@ export const forgotUserPassword = createAsyncThunk(
   }
 );
 
+// Reset Password
+export const resetUserPassword = createAsyncThunk(
+  "user/resetUserPassword",
+  async ({token, userData}, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.post(
+        `/api/v1/reset/${token}`,
+        userData,
+        config
+      );
+      console.log("Forgot Password Request response: ", data);
+      return data;
+    } catch (error) {
+      console.log("Forgot Password error: ", error);
+      return rejectWithValue(
+        error.response?.data || { message: "Failed to send email" }
+      );
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -334,6 +360,28 @@ const userSlice = createSlice({
           action.payload?.message ||
           "Email send failed, please try again later";
       });
+
+      // Reset Password
+      builder
+      .addCase(resetUserPassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(resetUserPassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.success = action.payload?.success;
+        state.user = null;
+        state.isAuthenticated = false;
+      })
+      .addCase(resetUserPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.payload?.message ||
+          "Password Reset failed, please try again later";
+      });
+
+    
   },
 });
 
