@@ -60,6 +60,38 @@ export const login = createAsyncThunk(
   }
 );
 
+// Load User
+export const loadUser = createAsyncThunk(
+  "user/loadUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get("/api/v1/profile");
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data || "An error occurred while trying to load user"
+      );
+    }
+  }
+);
+
+// Logout User
+export const logout = createAsyncThunk(
+  "user/logout",
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post("/api/v1/logout", {
+        withCredentials: true,
+      });
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data || "An error occurred while trying to logout"
+      );
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -123,6 +155,47 @@ const userSlice = createSlice({
         state.success = false;
         state.user = null;
         state.isAuthenticated = false;
+      });
+
+    // Load User
+    builder
+      .addCase(loadUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loadUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.user = action.payload?.user || null;
+        state.isAuthenticated = Boolean(action.payload?.user);
+      })
+      .addCase(loadUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.payload?.message ||
+          "User details fetching failed , please try again later";
+        state.success = false;
+        state.user = null;
+        state.isAuthenticated = false;
+      });
+
+    // Logout User
+    builder
+      .addCase(logout.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(logout.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.user = null;
+        state.isAuthenticated = false;
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.payload?.message ||
+          "Failed to logout , please try again later";
       });
   },
 });
