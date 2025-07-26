@@ -4,13 +4,14 @@ import { toast } from "react-toastify";
 import {
   addItemsToCart,
   removeErrors,
+  removeItemFromCart,
   removeMessage,
 } from "../features/cart/cartSlice";
 
 function CartItem({ item }) {
   const [quantity, setQuantity] = useState(item.quantity);
   const dispatch = useDispatch();
-  const { success, error, message, loading, CartItems } = useSelector(
+  const { success, error, message, loading, cartItems } = useSelector(
     (state) => state.cart
   );
 
@@ -43,6 +44,15 @@ function CartItem({ item }) {
     if (quantity !== item.quantity) {
       dispatch(addItemsToCart({ id: item.product, quantity }));
     }
+  };
+
+  const handleRemove = () => {
+    if (loading) return;
+    dispatch(removeItemFromCart(item.product));
+    toast.success("Item removed from cart", {
+      position: "top-center",
+      autoClose: 3000,
+    });
   };
 
   useEffect(() => {
@@ -120,7 +130,13 @@ function CartItem({ item }) {
           >
             {loading ? "Updating..." : "Update"}
           </button>
-          <button className="remove-item-btn">Remove</button>
+          <button
+            className="remove-item-btn"
+            disabled={loading}
+            onClick={handleRemove}
+          >
+            Remove
+          </button>
         </div>
       </div>
     </>
