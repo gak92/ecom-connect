@@ -59,19 +59,19 @@ function Cart() {
               <h3 className="price-summary-heading">Price Summary</h3>
               <div className="summary-item">
                 <p className="summary-label">Subtotal: </p>
-                <p className="summary-value">{subtotal}/=</p>
+                <p className="summary-value">{subtotal.toFixed(2)}/=</p>
               </div>
               <div className="summary-item">
                 <p className="summary-label">Tax (18%) </p>
-                <p className="summary-value">{tax}</p>
+                <p className="summary-value">{tax.toFixed(2)}</p>
               </div>
               <div className="summary-item">
                 <p className="summary-label">Shipping: </p>
-                <p className="summary-value">{shipping}</p>
+                <p className="summary-value">{shipping.toFixed(2)}</p>
               </div>
               <div className="summary-total">
                 <p className="total-label">Total: </p>
-                <p className="total-value">{total}/=</p>
+                <p className="total-value">{total.toFixed(2)}/=</p>
               </div>
               <button className="checkout-btn">Proceed to Checkout</button>
             </div>
