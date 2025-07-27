@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import {connectDatabase} from "./config/database.js";
 dotenv.config({ path: "backend/config/config.env" });
 import {v2 as cloudinary} from "cloudinary";
+import Razorpay from "razorpay";
 
 // connect to databae
 connectDatabase();
@@ -22,6 +23,12 @@ process.on("uncaughtException", (error) => {
 });
 
 const PORT = process.env.PORT || 8001;
+export const instance = new Razorpay({
+  key_id: process.env.RAZOR_PAY_API_KEY,
+  key_secret: process.env.RAZOR_PAY_API_SECRET,
+});
+
+
 const server = app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

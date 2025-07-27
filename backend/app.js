@@ -5,6 +5,7 @@ import orderRoutes from "./routes/orderRoutes.js";
 import errorHandlerMiddleware from "./middleware/error.js";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
+import dotenv from "dotenv";
 
 const app = express();
 
@@ -20,5 +21,6 @@ app.use("/api/v1", orderRoutes);
 
 // Error handling middleware
 app.use(errorHandlerMiddleware);
+dotenv.config({ path: "backend/config/config.env" });
 
 export default app;
