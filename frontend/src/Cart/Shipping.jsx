@@ -6,20 +6,35 @@ import Footer from "../components/Footer";
 import CheckoutPath from "./CheckoutPath";
 import { useDispatch, useSelector } from "react-redux";
 import { Country, State, City } from "country-state-city";
+import { toast } from "react-toastify";
+import { saveShippingInfo } from "../features/cart/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 function Shipping() {
   const { shippingInfo } = useSelector((state) => state.cart);
   console.log(shippingInfo);
   const dispatch = useDispatch();
-  const [address, setAddress] = useState("");
-  const [pinCode, setPinCode] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [country, setCountry] = useState("");
-  const [state, setState] = useState("");
-  const [city, setCity] = useState("");
+  const [address, setAddress] = useState(shippingInfo.address || "");
+  const [pinCode, setPinCode] = useState(shippingInfo.pinCode || "");
+  const [phoneNumber, setPhoneNumber] = useState(shippingInfo.phoneNumber || "");
+  const [country, setCountry] = useState(shippingInfo.country || "");
+  const [state, setState] = useState(shippingInfo.state || "");
+  const [city, setCity] = useState(shippingInfo.city || "");
+  const navigate = useNavigate();
 
   const shippingInfoSubmit = (e) => {
     e.preventDefault();
+    if (phoneNumber.length !== 10 || !phoneNumber.match(/^[0-9]+$/)) {
+      toast.error("Please enter a valid 10-digit phone number", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+      return;
+    }
+    dispatch(
+      saveShippingInfo({ address, pinCode, phoneNumber, country, state, city })
+    );
+    navigate("/order/confirm");
   };
 
   return (
