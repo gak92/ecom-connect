@@ -174,7 +174,7 @@ export const forgotUserPassword = createAsyncThunk(
 // Reset Password
 export const resetUserPassword = createAsyncThunk(
   "user/resetUserPassword",
-  async ({token, userData}, { rejectWithValue }) => {
+  async ({ token, userData }, { rejectWithValue }) => {
     try {
       const config = {
         headers: {
@@ -200,10 +200,12 @@ export const resetUserPassword = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    user: null,
+    user: localStorage.getItem("user")
+      ? JSON.parse(localStorage.getItem("user"))
+      : null,
     error: null,
     loading: false,
-    isAuthenticated: false,
+    isAuthenticated: JSON.parse(localStorage.getItem("isAuthenticated")) === true,
     success: false,
     message: null,
   },
@@ -229,6 +231,13 @@ const userSlice = createSlice({
         state.success = action.payload.success;
         state.user = action.payload?.user || null;
         state.isAuthenticated = Boolean(action.payload?.user);
+
+        // store in local storage
+        localStorage.setItem("user", JSON.stringify(state.user));
+        localStorage.setItem(
+          "isAuthenticated",
+          JSON.stringify(state.isAuthenticated)
+        );
       })
       .addCase(register.rejected, (state, action) => {
         state.loading = false;
@@ -253,6 +262,13 @@ const userSlice = createSlice({
         state.user = action.payload?.user || null;
         state.isAuthenticated = Boolean(action.payload?.user);
         console.log("Login success: ", state.user);
+
+        // store in local storage
+        localStorage.setItem("user", JSON.stringify(state.user));
+        localStorage.setItem(
+          "isAuthenticated",
+          JSON.stringify(state.isAuthenticated)
+        );
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
@@ -274,6 +290,13 @@ const userSlice = createSlice({
         state.error = null;
         state.user = action.payload?.user || null;
         state.isAuthenticated = Boolean(action.payload?.user);
+
+        // store in local storage
+        localStorage.setItem("user", JSON.stringify(state.user));
+        localStorage.setItem(
+          "isAuthenticated",
+          JSON.stringify(state.isAuthenticated)
+        );
       })
       .addCase(loadUser.rejected, (state, action) => {
         state.loading = false;
@@ -283,6 +306,13 @@ const userSlice = createSlice({
         state.success = false;
         state.user = null;
         state.isAuthenticated = false;
+
+        if (action.payload?.statusCode === 401) {
+          state.user = null;
+          state.isAuthenticated = false;
+          localStorage.removeItem("user");
+          localStorage.removeItem("isAuthenticated");
+        }
       });
 
     // Logout User
@@ -296,6 +326,8 @@ const userSlice = createSlice({
         state.error = null;
         state.user = null;
         state.isAuthenticated = false;
+        localStorage.removeItem("user");
+        localStorage.removeItem("isAuthenticated");
       })
       .addCase(logout.rejected, (state, action) => {
         state.loading = false;
@@ -361,8 +393,8 @@ const userSlice = createSlice({
           "Email send failed, please try again later";
       });
 
-      // Reset Password
-      builder
+    // Reset Password
+    builder
       .addCase(resetUserPassword.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -380,8 +412,6 @@ const userSlice = createSlice({
           action.payload?.message ||
           "Password Reset failed, please try again later";
       });
-
-    
   },
 });
 

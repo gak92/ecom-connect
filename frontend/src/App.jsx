@@ -28,7 +28,7 @@ function App() {
       dispatch(loadUser());
     }
   }, [dispatch]);
-  console.log(isAuthenticated, user);
+  // console.log(isAuthenticated, user);
 
   return (
     <Router>
