@@ -1,5 +1,6 @@
 import handleAsyncError from "../middleware/handleAsyncError.js";
 import { instance } from "../server.js";
+import crypto from "crypto";
 
 // ================================================================
 //               1- Process Payment
@@ -14,7 +15,6 @@ export const processPayment = handleAsyncError(async (req, res, next) => {
 
   //   const order = await instance.orders.create(options);
   // Dummy data because dont have Razorpay API key
-
   const order = {
     id: "order_id_example",
     amount: options.amount,
@@ -40,4 +40,38 @@ export const sendAPIKey = handleAsyncError(async (req, res, next) => {
   res.status(200).json({
     key: process.env.RAZOR_PAY_API_KEY,
   });
+});
+
+// ================================================================
+//             3- Payment Verification
+// ================================================================
+export const paymentVerification = handleAsyncError(async (req, res, next) => {
+  //   console.log(req.body);
+  //   const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
+  req.body;
+  // dummy data because dont have Razorpay API key
+  const razorpay_payment_id = "payment_id_example";
+  const razorpay_order_id = "order_id_example";
+  const razorpay_signature = "signature_example";
+
+  const body = razorpay_order_id + "|" + razorpay_payment_id;
+  const exprectedSignature = crypto
+    .createHmac("sha256", process.env.RAZOR_PAY_API_SECRET)
+    .update(body.toString())
+    .digest("hex");
+
+  const isAuthentic = exprectedSignature === razorpay_signature;
+
+  if (isAuthentic) {
+    res.status(200).json({
+      success: true,
+      message: "Payment Verified successfully",
+      reference: razorpay_payment_id,
+    });
+  } else {
+    res.status(200).json({
+      success: false,
+      message: "Payment Verification failed",
+    });
+  }
 });
