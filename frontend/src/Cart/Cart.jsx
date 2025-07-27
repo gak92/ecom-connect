@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Cart() {
   const { cartItems } = useSelector((state) => state.cart);
-  console.log(cartItems);
+  // console.log(cartItems);
   const subtotal = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
