@@ -12,7 +12,20 @@ export const processPayment = handleAsyncError(async (req, res, next) => {
     currency: "INR",
   };
 
-  const order = await instance.orders.create(options);
+  //   const order = await instance.orders.create(options);
+  // Dummy data because dont have Razorpay API key
+
+  const order = {
+    id: "order_id_example",
+    amount: options.amount,
+    amount_due: 0,
+    amount_paid: options.amount,
+    currency: options.currency,
+    status: "created",
+    notes: [],
+    offer_id: "offer_id_example",
+    receipt: "",
+  };
   //   console.log(order);
   res.status(200).json({
     success: true,
