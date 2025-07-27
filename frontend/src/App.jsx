@@ -63,7 +63,7 @@ function App() {
           element={<ProtectedRoute element={<OrderConfirm />} />}
         />
         <Route
-          path="/process/payment"
+          path="/payment/process"
           element={<ProtectedRoute element={<Payment />} />}
         />
       </Routes>

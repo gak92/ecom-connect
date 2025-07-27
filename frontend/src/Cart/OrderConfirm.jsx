@@ -27,7 +27,7 @@ function OrderConfirm() {
       total,
     };
     sessionStorage.setItem("orderData", JSON.stringify(data));
-    navigate("/process/payment");
+    navigate("/payment/process");
   };
   return (
     <>
