@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Loader from "../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
-import toast from "react-toastify";
+import {toast} from "react-toastify";
 import {
   createOrder,
   removeErrors,
