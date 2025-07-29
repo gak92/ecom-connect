@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Razorpay from "razorpay";
-import toast from "react-toastify";
+import {toast} from "react-toastify";
 
 function Payment() {
   const orderData = JSON.parse(sessionStorage.getItem("orderData"));
@@ -59,8 +59,9 @@ function Payment() {
           color: "#3399cc",
         },
       };
-      const rzp = new Razorpay(options);
-      rzp.open();
+      // const rzp = new Razorpay(options);
+      // rzp.open();
+      return order;
     } catch (error) {
       console.error("Payment failed: ", error);
       toast.error(error.message, {
