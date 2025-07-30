@@ -236,6 +236,7 @@ export const deleteProductReview = handleAsyncError(async (req, res, next) => {
 // ================================================================
 export const getAdminAllProducts = handleAsyncError(async (req, res, next) => {
   const products = await Product.find();
+  console.log("fetching all products...");
   res.status(200).json({
     success: true,
     products,
