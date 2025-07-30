@@ -2,6 +2,7 @@ import handleAsyncError from "../middleware/handleAsyncError.js";
 import Product from "../models/productModel.js";
 import ApiFunctionality from "../utils/apiFunctionality.js";
 import HandleError from "../utils/handleError.js";
+import { v2 as cloudinary } from "cloudinary";
 
 // {{base_url}}/api/v1/product/6878c7bd0308544aae3faab4?keyword=Mobile
 
@@ -16,6 +17,25 @@ export const createProduct = handleAsyncError(async (req, res, next) => {
   // console.log("id: ", req.user.id);
   // console.log("_id: ", req.user._id);
 
+  let image = [];
+  if (typeof req.body.image === "string") {
+    image.push(req.body.image);
+  } else {
+    image = req.body.image;
+  }
+
+  const imageLinks = [];
+  for (let i = 0; i < image.length; i++) {
+    const result = await cloudinary.uploader.upload(image[i], {
+      folder: "products",
+    });
+    imageLinks.push({
+      public_id: result.public_id,
+      url: result.secure_url,
+    });
+  }
+
+  req.body.image = imageLinks;
   req.body.user = req.user.id;
 
   const product = await Product.create(req.body);
