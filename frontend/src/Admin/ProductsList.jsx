@@ -5,14 +5,41 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAdminProducts, removeErrors } from "../features/admin/adminSlice";
+import {
+  fetchAdminProducts,
+  removeErrors,
+  removeSuccess,
+  deleteProduct,
+} from "../features/admin/adminSlice";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 function ProductsList() {
-  const { products, loading, error } = useSelector((state) => state.admin);
+  const { products, loading, error, deleting } = useSelector(
+    (state) => state.admin
+  );
   console.log(products);
   const dispatch = useDispatch();
+
+  const handleDelete = (productId) => {
+    const isConfirm = window.confirm(
+      "Are you sure you want to delete this product?"
+    );
+    console.log(isConfirm);
+    if (isConfirm) {
+      dispatch(deleteProduct(productId)).then((action) => {
+        if (action.type === "/admin/deleteProduct/fulfilled") {
+          toast.success("Product deleted successfully", {
+            position: "top-center",
+            autoClose: 3000,
+          });
+          dispatch(removeSuccess());
+        }
+      });
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchAdminProducts());
@@ -78,16 +105,17 @@ function ProductsList() {
                     <td>
                       <Link
                         to={`/admin/product/${product._id}`}
-                        className="action-icon delete-icon"
+                        className="action-icon edit-icon"
                       >
-                        Edit
+                        <EditIcon />
                       </Link>
-                      <Link
-                        to="/admin/product/:productId"
+                      <button
                         className="action-icon delete-icon"
+                        onClick={() => handleDelete(product._id)}
+                        disabled={deleting[product._id]}
                       >
-                        Delete
-                      </Link>
+                        {deleting[product._id] ? <Loader /> : <DeleteIcon />}
+                      </button>
                     </td>
                   </tr>
                 ))}

@@ -133,7 +133,7 @@ const productSlice = createSlice({
         state.reviewLoading = true;
         state.error = null;
       })
-      .addCase(createReview.fulfilled, (state, action) => {
+      .addCase(createReview.fulfilled, (state) => {
         state.reviewLoading = false;
         state.reviewSuccess = true;
 
