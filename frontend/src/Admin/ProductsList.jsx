@@ -77,13 +77,13 @@ function ProductsList() {
                     <td>{new Date(product.createdAt).toLocaleString()}</td>
                     <td>
                       <Link
-                        to={`/admin/products/${product._id}`}
+                        to={`/admin/product/${product._id}`}
                         className="action-icon delete-icon"
                       >
                         Edit
                       </Link>
                       <Link
-                        to="/admin/products/:productId"
+                        to="/admin/product/:productId"
                         className="action-icon delete-icon"
                       >
                         Delete
