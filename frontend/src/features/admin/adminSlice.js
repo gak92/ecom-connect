@@ -86,6 +86,20 @@ export const deleteProduct = createAsyncThunk(
   }
 );
 
+// Fetch All users
+export const fetchUsers = createAsyncThunk(
+  "/admin/fetchUsers",
+  async (_, rejectWithValue) => {
+    try {
+      const { data } = await axios.get("/api/v1/admin/users");
+      // console.log(data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Error in fetching users");
+    }
+  }
+);
+
 const adminSlice = createSlice({
   name: "admin",
   initialState: {
@@ -95,6 +109,7 @@ const adminSlice = createSlice({
     loading: false,
     product: {},
     deleting: {},
+    users: [],
   },
   reducers: {
     removeErrors: (state) => {
@@ -110,6 +125,7 @@ const adminSlice = createSlice({
       .addCase(fetchAdminProducts.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.success = false;
       })
       .addCase(fetchAdminProducts.fulfilled, (state, action) => {
         state.loading = false;
@@ -119,6 +135,7 @@ const adminSlice = createSlice({
       })
       .addCase(fetchAdminProducts.rejected, (state, action) => {
         state.loading = false;
+        state.success = false;
         state.error = action.payload?.message || "Error in fetching products";
       });
 
@@ -127,6 +144,7 @@ const adminSlice = createSlice({
       .addCase(createProduct.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.success = false;
       })
       .addCase(createProduct.fulfilled, (state, action) => {
         state.loading = false;
@@ -137,6 +155,7 @@ const adminSlice = createSlice({
       })
       .addCase(createProduct.rejected, (state, action) => {
         state.loading = false;
+        state.success = false;
         state.error = action.payload?.message || "Error in creating a product";
       });
 
@@ -172,6 +191,23 @@ const adminSlice = createSlice({
         const id = action.meta.arg;
         state.deleting[id] = false;
         state.error = action.payload?.message || "Error in deleting a product";
+      });
+
+    // Fetching all users
+    builder
+      .addCase(fetchUsers.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchUsers.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.success = action.payload.success;
+        state.users = action.payload.users;
+      })
+      .addCase(fetchUsers.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Error in fetching users";
       });
   },
 });

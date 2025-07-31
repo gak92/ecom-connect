@@ -78,7 +78,7 @@ import { toast } from "react-toastify";
 
 function Home() {
   // Get product state from Redux store
-  const { loading, error, products, productCount } = useSelector(
+  const { loading, error, products } = useSelector(
     (state) => state.product
   );
 

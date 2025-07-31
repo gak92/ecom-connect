@@ -61,6 +61,7 @@ function UserDashboard({ user }) {
 
   function adminDashboard() {
     navigate("/admin/dashboard");
+    setMenuVisible(false);
   }
 
   return (
