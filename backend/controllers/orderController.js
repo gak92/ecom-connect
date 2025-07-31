@@ -93,7 +93,7 @@ export const getAdminAllOrders = handleAsyncError(async (req, res, next) => {
 });
 
 // ================================================================
-//            5- Admin Get  Orders
+//            5- Admin Update  Orders
 // ================================================================
 export const updateOrderStatus = handleAsyncError(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
@@ -132,7 +132,7 @@ export const updateOrderStatus = handleAsyncError(async (req, res, next) => {
 async function updateQuantity(productId, quantity) {
   const product = await Product.findById(productId);
   if (!product) {
-    throw new HandleError("Product Not Found", 404);
+    throw new Error("Product Not Found");
   }
 
   product.stock -= quantity;

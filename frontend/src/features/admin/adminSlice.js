@@ -176,7 +176,36 @@ export const deleteOrder = createAsyncThunk(
       return data;
     } catch (error) {
       console.log(error.response?.data);
-      return rejectWithValue(error.response?.data || "Failed to delete order....");
+      return rejectWithValue(
+        error.response?.data || "Failed to delete order...."
+      );
+    }
+  }
+);
+
+// Update order status
+export const updateOrderStatus = createAsyncThunk(
+  "/admin/updateOrderStatus",
+  async ({ orderId, status }, rejectWithValue) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const { data } = await axios.put(
+        `/api/v1/admin/order/${orderId}`,
+        { status },
+        config
+      );
+      // console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error.response?.data);
+      return rejectWithValue(
+        error.response?.data || "Failed to update order status...."
+      );
     }
   }
 );
@@ -195,6 +224,7 @@ const adminSlice = createSlice({
     message: null,
     orders: [],
     totalAmount: 0,
+    order: {},
   },
   reducers: {
     removeErrors: (state) => {
@@ -379,6 +409,25 @@ const adminSlice = createSlice({
         console.log(action.payload?.message);
         state.loading = false;
         state.error = action.payload?.message || "Failed to delete order";
+      });
+
+    // Update Order Status
+    builder
+      .addCase(updateOrderStatus.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateOrderStatus.fulfilled, (state, action) => {
+        state.loading = false;
+        // state.error = null;
+        state.success = action.payload.success;
+        state.order = action.payload.order;
+      })
+      .addCase(updateOrderStatus.rejected, (state, action) => {
+        console.log(action.payload?.message);
+        state.loading = false;
+        state.error =
+          action.payload?.message || "Failed to update order status";
       });
   },
 });
