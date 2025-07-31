@@ -100,6 +100,38 @@ export const fetchUsers = createAsyncThunk(
   }
 );
 
+// Get Single User
+export const getSingleUser = createAsyncThunk(
+  "/admin/getSingleUser",
+  async (id, rejectWithValue) => {
+    try {
+      const { data } = await axios.get(`/api/v1/admin/user/${id}`);
+      // console.log(data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data || "Error in fetching single user"
+      );
+    }
+  }
+);
+
+// Update User Role
+export const updateUserRole = createAsyncThunk(
+  "/admin/updateUserRole",
+  async ({ userId, role }, rejectWithValue) => {
+    try {
+      const { data } = await axios.put(`/api/v1/admin/user/${userId}`, {role});
+      // console.log(data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data || "Error in updating user role"
+      );
+    }
+  }
+);
+
 const adminSlice = createSlice({
   name: "admin",
   initialState: {
@@ -110,6 +142,7 @@ const adminSlice = createSlice({
     product: {},
     deleting: {},
     users: [],
+    user: {},
   },
   reducers: {
     removeErrors: (state) => {
@@ -202,12 +235,45 @@ const adminSlice = createSlice({
       .addCase(fetchUsers.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.success = action.payload.success;
         state.users = action.payload.users;
       })
       .addCase(fetchUsers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "Error in fetching users";
+      });
+
+    // Fetching single user
+    builder
+      .addCase(getSingleUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getSingleUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.user = action.payload.user;
+      })
+      .addCase(getSingleUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.payload?.message || "Error in fetching single user";
+      });
+
+    // Update User Role
+    builder
+      .addCase(updateUserRole.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUserRole.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.success = action.payload.success;
+      })
+      .addCase(updateUserRole.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.payload?.message || "Error in updating user role";
       });
   },
 });
