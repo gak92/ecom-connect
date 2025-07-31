@@ -149,6 +149,7 @@ export const deleteOrder = handleAsyncError(async (req, res, next) => {
   }
 
   if (order.orderStatus !== "Delivered") {
+    console.log("Order not delivered yet");
     return next(
       new HandleError(
         "Only delivered orders can be deleted, Order still in processing",

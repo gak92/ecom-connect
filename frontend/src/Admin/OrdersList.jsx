@@ -6,12 +6,20 @@ import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import { Delete, Edit } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllOrders, removeErrors } from "../features/admin/adminSlice";
+import {
+  clearMessage,
+  deleteOrder,
+  fetchAllOrders,
+  removeErrors,
+  removeSuccess,
+} from "../features/admin/adminSlice";
 import Loader from "../components/Loader";
 import { toast } from "react-toastify";
 
 function OrdersList() {
-  const { orders, loading, error } = useSelector((state) => state.admin);
+  const { orders, loading, error, success, message } = useSelector(
+    (state) => state.admin
+  );
   const dispatch = useDispatch();
   console.log(orders);
 
@@ -19,12 +27,28 @@ function OrdersList() {
     dispatch(fetchAllOrders());
   }, [dispatch]);
 
+  const handleDelete = (orderId) => {
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this order?"
+    );
+    if (isConfirmed) {
+      dispatch(deleteOrder(orderId));
+    }
+  };
+
   useEffect(() => {
     if (error) {
       toast.error(error, { position: "top-center", autoClose: 3000 });
       dispatch(removeErrors());
     }
-  }, [dispatch, error]);
+
+    if (success) {
+      toast.success(message, { position: "top-center", autoClose: 3000 });
+      dispatch(removeSuccess());
+      dispatch(clearMessage());
+      dispatch(fetchAllOrders());
+    }
+  }, [dispatch, error, success, message]);
 
   if (orders && orders.length === 0) {
     return (
@@ -75,7 +99,10 @@ function OrdersList() {
                       >
                         <Edit />{" "}
                       </Link>
-                      <button className="action-icon delete-icon">
+                      <button
+                        className="action-icon delete-icon"
+                        onClick={() => handleDelete(order._id)}
+                      >
                         <Delete />
                       </button>
                     </td>

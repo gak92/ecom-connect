@@ -166,6 +166,21 @@ export const fetchAllOrders = createAsyncThunk(
   }
 );
 
+// Delete order
+export const deleteOrder = createAsyncThunk(
+  "/admin/deleteOrder",
+  async (orderId, rejectWithValue) => {
+    try {
+      const { data } = await axios.delete(`/api/v1/admin/order/${orderId}`);
+      // console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error.response?.data);
+      return rejectWithValue(error.response?.data || "Failed to delete order....");
+    }
+  }
+);
+
 const adminSlice = createSlice({
   name: "admin",
   initialState: {
@@ -346,6 +361,24 @@ const adminSlice = createSlice({
       .addCase(fetchAllOrders.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "Failed to fetch all orders";
+      });
+
+    // Delete Order
+    builder
+      .addCase(deleteOrder.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteOrder.fulfilled, (state, action) => {
+        state.loading = false;
+        // state.error = null;
+        state.success = action.payload.success;
+        state.message = action.payload.message;
+      })
+      .addCase(deleteOrder.rejected, (state, action) => {
+        console.log(action.payload?.message);
+        state.loading = false;
+        state.error = action.payload?.message || "Failed to delete order";
       });
   },
 });
