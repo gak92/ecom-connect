@@ -121,12 +121,30 @@ export const updateUserRole = createAsyncThunk(
   "/admin/updateUserRole",
   async ({ userId, role }, rejectWithValue) => {
     try {
-      const { data } = await axios.put(`/api/v1/admin/user/${userId}`, {role});
+      const { data } = await axios.put(`/api/v1/admin/user/${userId}`, {
+        role,
+      });
       // console.log(data);
       return data;
     } catch (error) {
       return rejectWithValue(
         error.response?.data || "Error in updating user role"
+      );
+    }
+  }
+);
+
+// Delete User
+export const deleteUser = createAsyncThunk(
+  "/admin/deleteUser",
+  async (userId, rejectWithValue) => {
+    try {
+      const { data } = await axios.delete(`/api/v1/admin/user/${userId}`);
+      // console.log(data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data || "Error in updating deleting user"
       );
     }
   }
@@ -143,6 +161,7 @@ const adminSlice = createSlice({
     deleting: {},
     users: [],
     user: {},
+    message: null,
   },
   reducers: {
     removeErrors: (state) => {
@@ -150,6 +169,9 @@ const adminSlice = createSlice({
     },
     removeSuccess: (state) => {
       state.success = false;
+    },
+    clearMessage: (state) => {
+      state.message = null;
     },
   },
   extraReducers: (builder) => {
@@ -272,12 +294,27 @@ const adminSlice = createSlice({
       })
       .addCase(updateUserRole.rejected, (state, action) => {
         state.loading = false;
-        state.error =
-          action.payload?.message || "Error in updating user role";
+        state.error = action.payload?.message || "Error in updating user role";
+      });
+
+    // Delete User
+    builder
+      .addCase(deleteUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.message = action.payload.message;
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Error in deleting user";
       });
   },
 });
 
-export const { removeErrors, removeSuccess } = adminSlice.actions;
+export const { removeErrors, removeSuccess, clearMessage } = adminSlice.actions;
 
 export default adminSlice.reducer;
