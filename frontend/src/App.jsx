@@ -38,7 +38,7 @@ function App() {
     if (isAuthenticated) {
       dispatch(loadUser());
     }
-  }, [dispatch]);
+  }, [dispatch, isAuthenticated]);
   // console.log(isAuthenticated, user);
 
   return (
@@ -126,7 +126,9 @@ function App() {
         />
         <Route
           path="/admin/order/:orderId"
-          element={<ProtectedRoute element={<UpdateOrder />} adminOnly={true} />}
+          element={
+            <ProtectedRoute element={<UpdateOrder />} adminOnly={true} />
+          }
         />
       </Routes>
       {isAuthenticated && <UserDashboard user={user} />}
