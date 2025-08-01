@@ -7,18 +7,23 @@ import "../AdminStyles/ReviewsList.css";
 import { Delete } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  clearMessage,
+  deleteReview,
   fetchAdminProducts,
   fetchProductReviews,
   removeErrors,
+  removeSuccess,
 } from "../features/admin/adminSlice";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function ReviewsList() {
-  const { products, loading, error, reviews } = useSelector(
+  const { products, loading, error, reviews, success, message } = useSelector(
     (state) => state.admin
   );
   const [selectedProduct, setSelectedProduct] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchAdminProducts());
@@ -27,17 +32,40 @@ function ReviewsList() {
   console.log(products);
   console.log(reviews);
 
-  useEffect(() => {
-    if (error) {
-      toast.error(error, { position: "top-center", autoClose: 3000 });
-      dispatch(removeErrors());
-    }
-  }, [dispatch, error]);
+  //   useEffect(() => {
+  //     if (error) {
+  //       toast.error(error, { position: "top-center", autoClose: 3000 });
+  //       dispatch(removeErrors());
+  //     }
+  //   }, [dispatch, error]);
 
   const handleViewReviews = (productId) => {
     setSelectedProduct(productId);
     dispatch(fetchProductReviews(productId));
   };
+
+  const handleDeleteReview = (productId, reviewId) => {
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this review?"
+    );
+    if (isConfirmed) {
+      dispatch(deleteReview({ productId, reviewId }));
+    }
+  };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error, { position: "top-center", autoClose: 3000 });
+      dispatch(removeErrors());
+    }
+
+    if (success) {
+      toast.success(message, { position: "top-center", autoClose: 3000 });
+      dispatch(removeSuccess());
+      dispatch(clearMessage());
+      navigate("/admin/products");
+    }
+  }, [dispatch, error, success, message, navigate]);
 
   if (!products || products.length === 0) {
     return (
@@ -118,7 +146,12 @@ function ReviewsList() {
                         <td>{review.rating}</td>
                         <td>{review.comment}</td>
                         <td>
-                          <button className="action-btn delete-btn">
+                          <button
+                            className="action-btn delete-btn"
+                            onClick={() =>
+                              handleDeleteReview(selectedProduct, review._id)
+                            }
+                          >
                             <Delete />
                           </button>
                         </td>
