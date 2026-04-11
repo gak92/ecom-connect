@@ -77,10 +77,15 @@ function UserDashboard({ user }) {
             alt="Profile Picture"
             className="profile-avatar"
           />
-          <span className="profile-name">{user.name || "User"}</span>
         </div>
         {menuVisible && (
           <div className="menu-options">
+            <div className="menu-header">
+              <span className="menu-user-name">{user.name || "User"}</span>
+              <span className={`menu-user-role ${user.role === 'admin' ? 'admin' : 'user'}`}>
+                {user.role}
+              </span>
+            </div>
             {options.map((item) => (
               <button
                 key={item.name}
