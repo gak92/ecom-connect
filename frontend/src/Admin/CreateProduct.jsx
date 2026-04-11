@@ -23,7 +23,6 @@ function CreateProduct() {
   const [imagePreview, setImagePreview] = useState([]);
 
   const categories = ["Electronics", "Clothing", "Home & Kitchen", "Books"];
-  console.log(loading, error, success);
 
   const createProductSubmit = (e) => {
     e.preventDefault();
@@ -44,7 +43,6 @@ function CreateProduct() {
 
   const createProductImage = (e) => {
     const files = Array.from(e.target.files);
-    console.log(files);
 
     setImage([]);
     setImagePreview([]);
@@ -71,7 +69,7 @@ function CreateProduct() {
     }
 
     if (success) {
-      console.log("Product created successfully!");
+
       toast.success("Product created successfully!", {
         position: "top-center",
         autoClose: 3000,

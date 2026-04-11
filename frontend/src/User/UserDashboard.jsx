@@ -40,7 +40,7 @@ function UserDashboard({ user }) {
   }
 
   function logoutUser() {
-    console.log("Logging out...");
+
     dispatch(logout())
       .unwrap()
       .then(() => {

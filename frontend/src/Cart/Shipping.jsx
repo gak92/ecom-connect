@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 function Shipping() {
   const { shippingInfo } = useSelector((state) => state.cart);
-  console.log(shippingInfo);
+
   const dispatch = useDispatch();
   const [address, setAddress] = useState(shippingInfo.address || "");
   const [pinCode, setPinCode] = useState(shippingInfo.pinCode || "");

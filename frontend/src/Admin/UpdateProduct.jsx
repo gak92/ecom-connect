@@ -31,7 +31,6 @@ function UpdateProduct() {
   const navigate = useNavigate();
   const { id } = useParams();
   const categories = ["Electronics", "Clothing", "Home & Kitchen", "Books"];
-  console.log(product);
 
   useEffect(() => {
     dispatch(getProductDetails(id));
@@ -50,7 +49,6 @@ function UpdateProduct() {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    console.log(files);
 
     setImage([]);
     setImagePreview([]);

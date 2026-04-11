@@ -29,8 +29,6 @@ function ReviewsList() {
     dispatch(fetchAdminProducts());
   }, [dispatch]);
 
-  console.log(products);
-  console.log(reviews);
 
   //   useEffect(() => {
   //     if (error) {

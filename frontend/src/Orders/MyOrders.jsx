@@ -13,7 +13,6 @@ import Loader from "../components/Loader";
 function MyOrders() {
   const { orders, loading, error } = useSelector((state) => state.order);
   const dispatch = useDispatch();
-  console.log(orders);
 
   useEffect(() => {
     dispatch(getAllMyOrders());

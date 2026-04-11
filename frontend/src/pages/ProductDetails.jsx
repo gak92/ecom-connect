@@ -50,8 +50,6 @@ function ProductDetails() {
     dispatch(createReview({ rating: userRating, comment, productId: id }));
   };
 
-  console.log("Product Details: ", product);
-  console.log("Cart Items: ", cartItems);
 
   useEffect(() => {
     if (id) {
@@ -62,7 +60,7 @@ function ProductDetails() {
     };
   }, [dispatch, id]);
 
-  //   console.log("Product ID: ", id);
+
   useEffect(() => {
     if (error) {
       toast.error(error.message, {

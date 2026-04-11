@@ -34,8 +34,6 @@ function UsersList() {
     }
   }, [dispatch, error]);
 
-  console.log(loading, users, error);
-
   const handleDelete = (userId) => {
     const isConfirmed = window.confirm(
       "Are you sure you want to delete this user?"

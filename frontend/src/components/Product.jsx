@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 import Rating from "./Rating";
 
 function Product({ product }) {
-  // console.log(product._id);
+
   const [rating, setRating] = useState(0);
 
   const handleRatingChange = (newRating) => {
     setRating(newRating);
-    console.log(`Rating changed to ${newRating}`);
+
   };
 
   return (

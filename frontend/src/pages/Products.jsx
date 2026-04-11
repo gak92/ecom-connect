@@ -21,7 +21,7 @@ function Products() {
   const dispatch = useDispatch();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  // console.log(searchParams);
+
   const keyword = searchParams.get("keyword");
   // console.log(keyword); // Display keyword in console for debugging purposes.
   const category = searchParams.get("category");

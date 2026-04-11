@@ -21,7 +21,6 @@ function OrdersList() {
     (state) => state.admin
   );
   const dispatch = useDispatch();
-  console.log(orders);
 
   useEffect(() => {
     dispatch(fetchAllOrders());

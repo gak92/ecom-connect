@@ -40,8 +40,6 @@ function UpdateRole() {
     dispatch(getSingleUser(userId));
   }, [dispatch, userId]);
 
-  console.log(user);
-
   const handleChange = (e) => {
     setFormData({
       ...formData,

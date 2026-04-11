@@ -8,7 +8,7 @@ import { useEffect } from "react";
 
 function Profile() {
   const { loading, isAuthenticated, user } = useSelector((state) => state.user);
-  console.log(user);
+
   const navigate = useNavigate();
 
   useEffect(() => {

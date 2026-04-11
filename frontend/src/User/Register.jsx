@@ -23,7 +23,6 @@ function Register() {
   const registerDataChange = (e) => {
     if (e.target.name === "avatar") {
       const reader = new FileReader();
-      // console.log("File: ", e.target.files[0]);
 
       reader.onloadend = () => {
         if (reader.readyState === 2) {
@@ -37,7 +36,7 @@ function Register() {
       reader.readAsDataURL(e.target.files[0]);
     } else {
       setUser({ ...user, [e.target.name]: e.target.value });
-      //   console.log("User: ", user);
+
     }
   };
 
@@ -56,10 +55,9 @@ function Register() {
     myForm.append("email", email);
     myForm.append("password", password);
     myForm.append("avatar", avatar);
-    console.log(typeof myForm);
 
     for (let pair of myForm.entries()) {
-      console.log(pair);
+
     }
 
     dispatch(register(myForm));

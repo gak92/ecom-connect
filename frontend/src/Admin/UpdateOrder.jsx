@@ -25,11 +25,10 @@ function UpdateOrder() {
   } = useSelector((state) => state.admin);
   const loading = orderLoading || adminLoading;
   const dispatch = useDispatch();
-  console.log(order, orderId);
 
   useEffect(() => {
     if (orderId) {
-      console.log("Fetching order details...");
+
       dispatch(getOrderDetails(orderId));
     }
   }, [dispatch, orderId]);
@@ -53,7 +52,6 @@ function UpdateOrder() {
     paymentStatus = paymentInfo.status === "succeeded" ? "Paid" : "Not Paid";
     finalOrderStatus = paymentStatus === "Not Paid" ? "Cancelled" : orderStatus;
   }
-  console.log(paymentStatus, finalOrderStatus);
 
   const handleStatusUpdate = () => {
     if (!status) {

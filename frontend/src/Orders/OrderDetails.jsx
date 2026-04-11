@@ -13,11 +13,10 @@ function OrderDetails() {
   const { orderId } = useParams();
   const dispatch = useDispatch();
   const { order, loading, error } = useSelector((state) => state.order);
-  console.log("Order Details: ", order);
 
   useEffect(() => {
     dispatch(getOrderDetails(orderId));
-    console.log("Order getting started");
+
     if (error) {
       toast.error(error, { position: "top-center", autoClose: 3000 });
       dispatch(removeErrors());

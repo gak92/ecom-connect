@@ -30,7 +30,7 @@ function UpdatePassword() {
     myForm.append("confirmPassword", confirmPassword);
 
     // for (let pair of myForm.entries()) {
-    //   console.log(pair);
+
     // }
     dispatch(updateUserPassword(myForm));
   };
@@ -41,7 +41,7 @@ function UpdatePassword() {
         position: "top-center",
         autoClose: 3000,
       });
-      console.log("Error: ", error);
+
       dispatch(removeErrors());
     }
   }, [dispatch, error]);

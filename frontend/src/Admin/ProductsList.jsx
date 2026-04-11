@@ -20,14 +20,14 @@ function ProductsList() {
   const { products, loading, error, deleting } = useSelector(
     (state) => state.admin
   );
-  console.log(products);
+
   const dispatch = useDispatch();
 
   const handleDelete = (productId) => {
     const isConfirm = window.confirm(
       "Are you sure you want to delete this product?"
     );
-    console.log(isConfirm);
+
     if (isConfirm) {
       dispatch(deleteProduct(productId)).then((action) => {
         if (action.type === "/admin/deleteProduct/fulfilled") {
