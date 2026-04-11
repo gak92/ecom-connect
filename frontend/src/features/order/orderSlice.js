@@ -1,57 +1,46 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../../utils/axiosInstance.js";
 
-// create order
 export const createOrder = createAsyncThunk(
   "order/createOrder",
   async (order, { rejectWithValue }) => {
     try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-
-      const { data } = await axios.post("/api/v1/new/order", order, config);
-      console.log("Order data: ", data);
+      const { data } = await api.post("/new/order", order);
       return data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data || "An error occured while creating an order"
+        error.response?.data || "An error occurred while creating an order",
       );
     }
-  }
+  },
 );
 
-// Get User Orders
 export const getAllMyOrders = createAsyncThunk(
   "order/getAllMyOrders",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`/api/v1/orders/user`);
+      const { data } = await api.get("/orders/user");
       return data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data || "Failed to fetch user orders"
+        error.response?.data || "Failed to fetch user orders",
       );
     }
-  }
+  },
 );
 
-// Get Order Details
 export const getOrderDetails = createAsyncThunk(
   "order/getOrderDetails",
   async (orderID, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`/api/v1/order/${orderID}`);
-      console.log("Order Detail Response: ", data);
+      const { data } = await api.get(`/order/${orderID}`);
       return data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data || "Failed to fetch order details"
+        error.response?.data || "Failed to fetch order details",
       );
     }
-  }
+  },
 );
 
 const orderSlice = createSlice({
@@ -79,19 +68,18 @@ const orderSlice = createSlice({
       })
       .addCase(createOrder.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = null;
         state.success = action.payload.success;
         state.order = action.payload.order;
       })
       .addCase(createOrder.rejected, (state, action) => {
         state.loading = false;
         state.error =
-          action.payload?.message || "An error occured while creating an order";
+          action.payload?.message ||
+          "An error occurred while creating an order";
         state.success = false;
         state.order = null;
       });
 
-    // Get All user Orders
     builder
       .addCase(getAllMyOrders.pending, (state) => {
         state.loading = true;
@@ -99,7 +87,6 @@ const orderSlice = createSlice({
       })
       .addCase(getAllMyOrders.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = null;
         state.success = action.payload.success;
         state.orders = action.payload.orders;
       })
@@ -107,10 +94,9 @@ const orderSlice = createSlice({
         state.loading = false;
         state.error = action.payload?.message || "Failed to fetch user orders";
         state.success = false;
-        state.orders = null;
+        state.orders = [];
       });
 
-      // Get Order Details
     builder
       .addCase(getOrderDetails.pending, (state) => {
         state.loading = true;
@@ -118,17 +104,16 @@ const orderSlice = createSlice({
       })
       .addCase(getOrderDetails.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = null;
         state.success = action.payload.success;
         state.order = action.payload.order;
       })
       .addCase(getOrderDetails.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload?.message || "Failed to fetch user orders";
+        state.error =
+          action.payload?.message || "Failed to fetch order details";
       });
   },
 });
 
 export const { removeErrors, removeSuccess } = orderSlice.actions;
-
 export default orderSlice.reducer;

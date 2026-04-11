@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "../AdminStyles/OrdersList.css";
+import "./OrdersList.css";
 import PageTitle from "../components/PageTitle";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";

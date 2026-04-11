@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-import "../componentStyles/Navbar.css";
+import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
-import "../pageStyles/Search.css";
+import "./Search.css";
 import { useSelector } from "react-redux";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const {isAuthenticated} = useSelector(state => state.user);
-  const {cartItems} = useSelector(state => state.cart);
+  const { isAuthenticated } = useSelector((state) => state.user);
+  const { cartItems } = useSelector((state) => state.cart);
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -23,8 +23,6 @@ function Navbar() {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    console.log("Search query:", searchQuery);
-
     if (searchQuery.trim()) {
       navigate(`/products?keyword=${encodeURIComponent(searchQuery.trim())}`);
     } else {

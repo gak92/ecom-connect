@@ -1,0 +1,117 @@
+/* ── Reviews List Admin ──────────────────────────────────────── */
+
+.reviewsList-container {
+  padding: 30px;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  min-height: calc(100vh - 120px);
+  margin: 90px 30px 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.reviewsList-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.reviewsList-submit-btn {
+  padding: 10px 20px;
+  background: var(--primary-main);
+  color: var(--text-light);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  height: 48px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: var(--transition-fast);
+}
+
+.reviewsList-submit-btn:hover {
+  background: var(--primary-dark);
+}
+
+.reviewsList-table-container {
+  margin-top: 10px;
+  overflow-x: auto;
+}
+
+.reviewsList-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--bg-secondary);
+}
+
+.reviewsList-table th,
+.reviewsList-table td {
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.reviewsList-table th {
+  background-color: var(--bg-primary);
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.reviewsList-table td {
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.reviewsList-table tr:hover td {
+  background-color: var(--bg-primary);
+}
+
+.delete-icon {
+  color: var(--error);
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition-fast);
+}
+
+.delete-icon:hover {
+  background-color: rgba(231, 76, 60, 0.1);
+}
+
+.no-admin-products {
+  text-align: center;
+  padding: 40px;
+  background-color: var(--bg-primary);
+  color: var(--text-secondary);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--border-color);
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .reviewsList-container {
+    margin: 80px 15px 20px;
+    padding: 20px;
+  }
+
+  .reviewsList-form {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .reviewsList-submit-btn {
+    width: 100%;
+  }
+}

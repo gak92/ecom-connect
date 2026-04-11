@@ -1,0 +1,81 @@
+/* ── Payment ─────────────────────────────────────────────────── */
+
+.payment-container {
+  max-width: 500px;
+  margin: 60px auto;
+  padding: 40px;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.payment-container h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.payment-submit-btn {
+  padding: 12px 20px;
+  background-color: var(--primary-main);
+  color: var(--text-light);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  margin-top: 15px;
+  box-shadow: var(--shadow-sm);
+}
+
+.payment-submit-btn:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.payment-submit-btn:disabled {
+  background-color: var(--border-color);
+  color: var(--text-muted);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Stripe Elements overrides */
+.StripeElement {
+  padding: 12px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  transition: var(--transition-fast);
+}
+
+.StripeElement--focus {
+  border-color: var(--primary-light);
+  background: var(--bg-secondary);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+}
+
+.StripeElement--invalid {
+  border-color: var(--error);
+}
+
+@media (max-width: 768px) {
+  .payment-container {
+    margin: 40px 15px;
+    padding: 25px;
+  }
+}

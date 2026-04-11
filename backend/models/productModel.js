@@ -40,9 +40,9 @@ const productSchema = new Schema(
       required: [true, "Please enter a product category"],
     },
     stock: {
-      type: String,
+      type: Number,
       required: [true, "Please enter Product Stock"],
-      maxLength: [5, "Product stock cannot exceed 5 characters"],
+      min: [0, "Product stock cannot be negative"],
       default: 1,
     },
     numOfReviews: {
@@ -78,7 +78,7 @@ const productSchema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 export default mongoose.model("Product", productSchema);

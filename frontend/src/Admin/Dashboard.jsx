@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "../AdminStyles/Dashboard.css";
+import "./Dashboard.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import PageTitle from "../components/PageTitle";

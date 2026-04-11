@@ -1,0 +1,125 @@
+/* ── Orders List Admin ───────────────────────────────────────── */
+
+.ordersList-container {
+  padding: 30px;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  min-height: calc(100vh - 120px);
+  margin: 90px 30px 30px;
+}
+
+.ordersList-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+}
+
+.ordersList-table-container {
+  margin-top: 10px;
+  overflow-x: auto;
+}
+
+.ordersList-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--bg-secondary);
+}
+
+.ordersList-table th,
+.ordersList-table td {
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.ordersList-table th {
+  background-color: var(--bg-primary);
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.ordersList-table td {
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.ordersList-table tr:hover td {
+  background-color: var(--bg-primary);
+}
+
+.order-status {
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: inline-block;
+}
+
+.order-status.processing {
+  background-color: rgba(243, 156, 18, 0.1);
+  color: var(--warning);
+}
+
+.order-status.delivered {
+  background-color: rgba(39, 174, 96, 0.1);
+  color: var(--success);
+}
+
+.action-icon {
+  margin-right: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition-fast);
+}
+
+.edit-icon {
+  color: var(--primary-main);
+}
+
+.edit-icon:hover {
+  background-color: rgba(44, 62, 80, 0.1);
+}
+
+.delete-icon {
+  color: var(--error);
+  border: none;
+  background-color: transparent;
+}
+
+.delete-icon:hover {
+  background-color: rgba(231, 76, 60, 0.1);
+}
+
+@media (max-width: 768px) {
+  .ordersList-container {
+    margin: 80px 15px 20px;
+    padding: 20px;
+  }
+
+  .ordersList-table {
+    font-size: 14px;
+  }
+
+  .ordersList-table th,
+  .ordersList-table td {
+    padding: 10px;
+  }
+
+  .ordersList-table th {
+    font-size: 0.8rem;
+  }
+
+  .action-icon {
+    font-size: 18px;
+  }
+}

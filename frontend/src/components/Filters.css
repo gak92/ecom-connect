@@ -1,0 +1,108 @@
+/* ── Filters ─────────────────────────────────────────────────── */
+
+.filter-section {
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  color: var(--text-primary);
+  margin-top: 120px;
+}
+
+.filter {
+  margin-bottom: 1.5rem;
+}
+
+.filter-heading {
+  text-align: left;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary-main);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.filter h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.filter select,
+.filter input[type="range"] {
+  width: 100%;
+  padding: 0.6rem;
+  margin: 0.25rem 0;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-family: inherit;
+  outline: none;
+  transition: var(--transition-fast);
+}
+
+.filter select:focus {
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+/* ── Range Slider ── */
+
+.filter input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: var(--border-color);
+  border-radius: 99px;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.filter input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--primary-main);
+  border-radius: 50%;
+  transition: transform 0.15s ease;
+}
+
+.filter input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  background: var(--primary-light);
+}
+
+.filter input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: var(--primary-main);
+  border-radius: 50%;
+  border: none;
+}
+
+.filters-container {
+  flex: 1 0 25%;
+  max-width: 250px;
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .filter-section {
+    margin-top: 50px;
+  }
+
+  .filters-container,
+  .product-section {
+    flex: 1 0 100%;
+    max-width: 100%;
+  }
+}

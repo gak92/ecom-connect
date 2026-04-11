@@ -1,5 +1,5 @@
 import React from "react";
-import "../UserStyles/Form.css";
+import "./Form.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useState } from "react";

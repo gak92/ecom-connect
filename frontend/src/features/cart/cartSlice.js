@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../../utils/axiosInstance.js";
 
 export const addItemsToCart = createAsyncThunk(
   "cart/addItemsToCart",
   async ({ id, quantity }, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`/api/v1/product/${id}`);
+      const { data } = await api.get(`/product/${id}`);
       return {
         product: data.product._id,
         name: data.product.name,
@@ -16,15 +16,16 @@ export const addItemsToCart = createAsyncThunk(
       };
     } catch (error) {
       return rejectWithValue(
-        error.response?.data || "An error occurred while adding items to cart"
+        error.response?.data || "An error occurred while adding items to cart",
       );
     }
-  }
+  },
 );
 
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
+    // Cart items and shipping are safe to persist in localStorage (non-sensitive)
     cartItems: JSON.parse(localStorage.getItem("cartItems")) || [],
     loading: false,
     error: null,
@@ -37,18 +38,15 @@ const cartSlice = createSlice({
     removeErrors: (state) => {
       state.error = null;
     },
-
     removeMessage: (state) => {
       state.message = null;
     },
 
     removeItemFromCart: (state, action) => {
-      state.removingId = action.payload;
       state.cartItems = state.cartItems.filter(
-        (item) => item.product !== state.removingId
+        (item) => item.product !== action.payload,
       );
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
-      state.removingId = null;
     },
 
     saveShippingInfo: (state, action) => {
@@ -60,7 +58,7 @@ const cartSlice = createSlice({
       state.cartItems = [];
       localStorage.removeItem("cartItems");
       localStorage.removeItem("shippingInfo");
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -70,21 +68,19 @@ const cartSlice = createSlice({
       })
       .addCase(addItemsToCart.fulfilled, (state, action) => {
         const item = action.payload;
-        const existingItem = state.cartItems.find(
-          (i) => i.product === item.product
+        const existing = state.cartItems.find(
+          (i) => i.product === item.product,
         );
 
-        if (existingItem) {
-          existingItem.quantity = item.quantity;
-          // state.cartItems = [...state.cartItems];
-          state.message = `Item ${item.name} already exists in cart. Quantity updated to ${item.quantity}`;
+        if (existing) {
+          existing.quantity = item.quantity;
+          state.message = `${item.name} quantity updated to ${item.quantity}`;
         } else {
           state.cartItems.push(item);
-          state.message = `Item ${item.name} added to cart successfully`;
+          state.message = `${item.name} added to cart`;
         }
 
         state.loading = false;
-        state.error = null;
         state.success = true;
         localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
       })

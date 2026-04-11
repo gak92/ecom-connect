@@ -1,5 +1,5 @@
 import React from "react";
-import "../componentStyles/Pagination.css";
+import "./Pagination.css";
 import { useSelector } from "react-redux";
 
 function Pagination({

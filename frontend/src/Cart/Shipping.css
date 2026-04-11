@@ -1,0 +1,110 @@
+/* ── Shipping ────────────────────────────────────────────────── */
+
+.shipping-form-container {
+  max-width: 800px;
+  margin: 60px auto;
+  padding: 40px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.shipping-form-header {
+  color: var(--text-primary);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.shipping-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem 2rem;
+}
+
+@media (max-width: 768px) {
+  .shipping-form-container {
+    padding: 20px;
+    margin: 40px auto;
+    width: 95%;
+  }
+
+  .shipping-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+.shipping-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.shipping-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.shipping-form-group label {
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.shipping-form-group input,
+.shipping-form-group select {
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-family: inherit;
+  transition: var(--transition-fast);
+}
+
+.shipping-form-group input:focus,
+.shipping-form-group select:focus {
+  outline: none;
+  background: var(--bg-secondary);
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+}
+
+.shipping-form-group input::placeholder {
+  color: var(--text-muted);
+}
+
+.shipping-submit-btn {
+  grid-column: 1 / -1;
+  padding: 1rem;
+  background: var(--primary-main);
+  color: var(--text-light);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  margin-top: 1rem;
+}
+
+.shipping-submit-btn:hover {
+  background: var(--primary-dark);
+}
+
+select::-webkit-scrollbar {
+  width: 8px;
+}
+
+select::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+select::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}

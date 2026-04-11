@@ -1,5 +1,25 @@
+# ── Backend ───────────────────────────────────
+backend/node_modules
+backend/config/config.env
+
+# ── Frontend ──────────────────────────────────
+frontend/node_modules
+frontend/.env
+frontend/.env.local
+
+# ── Root (legacy, can be removed once node_modules moved) ──
 node_modules
+
+# ── General ───────────────────────────────────
 .DS_Store
-.env
-*.env
 npm-debug.log
+*.log
+
+# ── Catch-all Environment Files ───────────────
+*.env
+*.env.*
+.env
+
+# ── Vercel Config (Temporary) ─────────────────
+vercel.json
+backend/vercel.js

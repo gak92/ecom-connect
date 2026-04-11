@@ -1,5 +1,5 @@
 import React from "react";
-import "../AdminStyles/UpdateProduct.css";
+import "./UpdateProduct.css";
 import PageTitle from "../components/PageTitle";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";

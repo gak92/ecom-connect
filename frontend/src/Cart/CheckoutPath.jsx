@@ -1,5 +1,5 @@
 import React from "react";
-import "../CartStyles/CheckoutPath.css";
+import "./CheckoutPath.css";
 import {
   AccountBalance,
   LibraryAddCheck,

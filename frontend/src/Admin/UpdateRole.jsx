@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../AdminStyles/UpdateRole.css";
+import "./UpdateRole.css";
 import PageTitle from "../components/PageTitle";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";

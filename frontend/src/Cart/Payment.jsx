@@ -1,75 +1,77 @@
 import React from "react";
-import "../CartStyles/Payment.css";
+import "./Payment.css";
 import PageTitle from "../components/PageTitle";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import CheckoutPath from "./CheckoutPath";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { useSelector } from "react-redux";
-import Razorpay from "razorpay";
-import {toast} from "react-toastify";
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { useDispatch, useSelector } from "react-redux";
+import { createPaymentIntent } from "../features/payment/paymentSlice";
+import { toast } from "react-toastify";
 
 function Payment() {
-  const orderData = JSON.parse(sessionStorage.getItem("orderData"));
-  const { user } = useSelector((state) => state.user);
-  const { shippingInfo } = useSelector((state) => state.cart);
+  const stripe = useStripe();
+  const elements = useElements();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const completePayement = async (amount) => {
+  const orderData = JSON.parse(sessionStorage.getItem("orderData"));
+  const { user } = useSelector((state) => state.user);
+  const { loading } = useSelector((state) => state.payment);
+
+  const handlePayment = async (e) => {
+    e.preventDefault();
+
+    if (!stripe || !elements) return;
+
     try {
-      console.log("Payment processing...", amount);
-      const { data: keyData } = await axios.get("/api/v1/getKey");
-      const { key } = keyData;
-      console.log("Key: ", key);
-      const { data } = await axios.post("/api/v1/payment/process", { amount });
-      // console.log("Payment response: ", data);
-      const { order } = data;
-      console.log("Order: ", order);
+      // 1 — Ask backend to create a PaymentIntent, get client_secret
+      const result = await dispatch(
+        createPaymentIntent(Math.round(orderData.total * 100)), // Convert to cents
+      ).unwrap();
 
-      // Open Razorpay Checkout
-      const options = {
-        key,
-        amount,
-        currency: "INR",
-        name: "My Ecommerce Store",
-        description: "My Ecommerce Store Test Transaction",
-        order_id: order.id,
-        // callback_url: "/api/v1/paymentVerification",
-        handler: async function (response) {
-          const { data } = await axios.post("/api/v1/paymentVerification", {
-            razorpay_payment_id: response.razorpay_payment_id,
-            razorpay_order_id: response.razorpay_order_id,
-            razorpay_signature: response.razorpay_signature,
-          });
+      const clientSecret = result.client_secret;
 
-          if (data.success) {
-            navigate(`/paymentSuccess?reference=${data.reference}`);
-          } else {
-            alert("Payment failed. Please try again.");
-            // navigate("/cart");
-          }
+      // 2 — Confirm card payment with Stripe using the client_secret
+      const { error, paymentIntent } = await stripe.confirmCardPayment(
+        clientSecret,
+        {
+          payment_method: {
+            card: elements.getElement(CardElement),
+            billing_details: {
+              name: user?.name,
+              email: user?.email,
+            },
+          },
         },
-        prefill: {
-          name: user.name,
-          email: user.email,
-          contact: shippingInfo.phoneNumber,
-        },
-        theme: {
-          color: "#3399cc",
-        },
-      };
-      // const rzp = new Razorpay(options);
-      // rzp.open();
-      return order;
-    } catch (error) {
-      console.error("Payment failed: ", error);
-      toast.error(error.message, {
+      );
+
+      if (error) {
+        toast.error(error.message, { position: "top-center", autoClose: 4000 });
+        return;
+      }
+
+      if (paymentIntent.status === "succeeded") {
+        navigate(`/paymentSuccess?reference=${paymentIntent.id}`);
+      }
+    } catch (err) {
+      toast.error(err?.message || "Payment failed. Please try again.", {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 4000,
       });
-      // navigate("/cart");
     }
+  };
+
+  const cardElementOptions = {
+    style: {
+      base: {
+        fontSize: "16px",
+        color: "#424770",
+        "::placeholder": { color: "#aab7c4" },
+      },
+      invalid: { color: "#e5424d" },
+    },
   };
 
   return (
@@ -82,12 +84,21 @@ function Payment() {
         <Link to="/order/confirm" className="payment-go-back">
           Go Back
         </Link>
-        <button
-          className="payment-btn"
-          onClick={() => completePayement(orderData.total.toFixed(2))}
-        >
-          Pay ({orderData.total.toFixed(2)})/=
-        </button>
+
+        <form onSubmit={handlePayment} className="payment-form">
+          <h3>Card Details</h3>
+          <div className="card-element-wrapper">
+            <CardElement options={cardElementOptions} />
+          </div>
+
+          <button
+            type="submit"
+            className="payment-btn"
+            disabled={!stripe || loading}
+          >
+            {loading ? "Processing..." : `Pay $${orderData?.total?.toFixed(2)}`}
+          </button>
+        </form>
       </div>
 
       <Footer />

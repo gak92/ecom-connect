@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../UserStyles/Form.css";
+import "./Form.css";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";

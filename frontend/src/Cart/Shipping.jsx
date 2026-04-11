@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../CartStyles/Shipping.css";
+import "./Shipping.css";
 import PageTitle from "../components/PageTitle";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";

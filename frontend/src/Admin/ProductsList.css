@@ -1,0 +1,116 @@
+/* ── Products List Admin ─────────────────────────────────────── */
+
+.product-list-container {
+  padding: 30px;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  min-height: calc(100vh - 120px);
+  margin: 90px 30px 30px;
+}
+
+.product-list-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background-color: var(--bg-secondary);
+}
+
+.product-table th,
+.product-table td {
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.product-table th {
+  background-color: var(--bg-primary);
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.product-table td {
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.admin-product-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+.product-table tr:hover td {
+  background-color: var(--bg-primary);
+}
+
+.action-link {
+  margin-right: 10px;
+  text-decoration: none;
+}
+
+.action-icon {
+  margin-right: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition-fast);
+}
+
+.edit-icon {
+  color: var(--primary-main);
+}
+
+.edit-icon:hover {
+  background-color: rgba(44, 62, 80, 0.1);
+}
+
+.delete-icon {
+  color: var(--error);
+  border: none;
+  background-color: transparent;
+}
+
+.delete-icon:hover {
+  background-color: rgba(231, 76, 60, 0.1);
+}
+
+.no-admin-products {
+  text-align: center;
+  padding: 40px;
+  background-color: var(--bg-primary);
+  color: var(--text-secondary);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--border-color);
+}
+
+.loading-message {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 40px;
+}
+
+@media (max-width: 768px) {
+  .product-list-container {
+    margin: 80px 15px 20px;
+    padding: 20px;
+    overflow-x: auto;
+  }
+}

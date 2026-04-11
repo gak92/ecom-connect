@@ -1,0 +1,155 @@
+/* ── Hero Banner ─────────────────────────────────────────────── */
+
+.hero-banner {
+  position: relative;
+  width: 100%;
+  min-height: 540px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background-color: var(--primary-dark); /* Fallback */
+}
+
+/* Background image with light overlay for elegant contrast */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url("/hero-banner.png");
+  background-size: cover;
+  background-position: center 30%;
+  filter: brightness(0.65);
+}
+
+.hero-banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(26, 37, 47, 0.8) 0%,
+    rgba(26, 37, 47, 0.2) 100%
+  );
+  pointer-events: none;
+}
+
+/* Content sits above the background */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+  padding: 4rem 3rem 4rem 5vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* "New Season Arrivals" label */
+.hero-eyebrow {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--primary-light);
+}
+
+/* Main headline */
+.hero-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  color: var(--text-light);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.hero-highlight {
+  color: var(--primary-light);
+}
+
+/* Sub-text */
+.hero-subtitle {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  max-width: 500px;
+  font-weight: 400;
+}
+
+/* CTA buttons */
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 2.25rem;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: var(--transition-normal);
+}
+
+.hero-btn-primary {
+  background: var(--primary-light);
+  color: var(--text-light);
+}
+
+.hero-btn-primary:hover {
+  background: #2980B9;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.hero-btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-light);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px);
+}
+
+.hero-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Trust badges */
+.hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.hero-badge {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
+  color: var(--text-light);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+
+@media (max-width: 600px) {
+  .hero-banner {
+    min-height: 460px;
+  }
+  .hero-content {
+    padding: 3rem 1.5rem;
+  }
+  .hero-actions {
+    flex-direction: column;
+  }
+  .hero-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

@@ -1,0 +1,68 @@
+/* ── Search Component ────────────────────────────────────────── */
+
+.search-container {
+  position: relative;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  transition: var(--transition-normal);
+  background: var(--bg-primary);
+  border-radius: 99px;
+  padding: 2px;
+}
+
+.search-input {
+  width: 0;
+  padding: 6px 12px;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.9rem;
+  outline: none;
+  transition: width 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+
+.search-form.active .search-input {
+  width: 150px;
+  opacity: 1;
+}
+
+.search-input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 50%;
+  transition: var(--transition-fast);
+}
+
+.search-icon:hover {
+  background: var(--border-color);
+}
+
+.search-icon:focus,
+.search-icon:active {
+  outline: none !important;
+}
+
+.search-icon .MuiSvgIcon-root {
+  color: var(--text-secondary);
+  font-size: 1.4rem;
+  transition: color 0.2s ease;
+}
+
+.search-form.active .search-icon .MuiSvgIcon-root,
+.search-icon:hover .MuiSvgIcon-root {
+  color: var(--primary-main);
+}

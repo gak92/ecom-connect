@@ -1,0 +1,215 @@
+/* ── Contact Page ────────────────────────────────────────────── */
+
+.contact-hero {
+  background: var(--bg-secondary);
+  padding: 5rem 2rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.contact-hero h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.contact-hero p {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+}
+
+/* ── Layout ── */
+
+.contact-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  max-width: 1100px;
+  margin: 4rem auto;
+  padding: 0 2rem 4rem;
+  align-items: flex-start;
+}
+
+/* ── Info Panel ── */
+
+.contact-info {
+  flex: 1;
+  min-width: 250px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.contact-info h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+}
+
+.contact-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.contact-info-icon {
+  color: var(--primary-main) !important;
+  font-size: 1.5rem !important;
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+.contact-info-item h4 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.contact-info-item p {
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.contact-hours {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.contact-hours h4 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.contact-hours p {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* ── Form ── */
+
+.contact-form {
+  flex: 2;
+  min-width: 320px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact-form h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.contact-form-row {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.contact-form-row .contact-field {
+  flex: 1;
+  min-width: 150px;
+}
+
+.contact-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.contact-field label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.contact-field input,
+.contact-field textarea {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  padding: 0.85rem 1rem;
+  font-size: 1rem;
+  outline: none;
+  transition: var(--transition-fast);
+  resize: vertical;
+  font-family: inherit;
+}
+
+.contact-field input:focus,
+.contact-field textarea:focus {
+  background: var(--bg-secondary);
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+}
+
+.contact-field input::placeholder,
+.contact-field textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* ── Submit Button ── */
+
+.contact-submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-main);
+  color: var(--text-light);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 1rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  align-self: flex-start;
+}
+
+.contact-submit-btn:hover:not(:disabled) {
+  background: var(--primary-dark);
+}
+
+.contact-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 768px) {
+  .contact-hero h1 {
+    font-size: 2.2rem;
+  }
+  .contact-form {
+    padding: 1.5rem;
+  }
+  .contact-info {
+    padding: 1.5rem;
+  }
+  .contact-submit-btn {
+    width: 100%;
+  }
+}

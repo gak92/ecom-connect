@@ -1,0 +1,28 @@
+/* ── Rating Stars ────────────────────────────────────────────── */
+
+.star {
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+  color: var(--text-muted);
+}
+
+.star.filled {
+  color: #F1C40F; /* Classic star gold, overriding design tokens for standard UX */
+}
+
+.star.empty {
+  color: var(--border-color);
+}
+
+.star:hover {
+  transform: scale(1.15);
+  color: #F39C12;
+}
+
+.productCardSpan {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-left: 0.5rem;
+  font-weight: 500;
+}
