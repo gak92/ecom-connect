@@ -76,7 +76,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  flex: 1;
+  flex: 1 1 auto;
 }
 
 .product-title {
@@ -85,6 +85,11 @@
   color: var(--text-primary);
   margin-bottom: 0.25rem;
   line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.6em; /* Reserve exactly 2 lines worth of space perfectly */
 }
 
 .product-description {
@@ -95,6 +100,7 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  height: 2.2em; /* Ensure the block size is preserved securely across cards */
 }
 
 .product-price {
@@ -102,6 +108,7 @@
   font-weight: 700;
   color: var(--primary-main);
   margin-bottom: 0.5rem;
+  margin-top: auto; /* Push the price and cart UI elements aggressively to bottoms perfectly lined up */
 }
 
 .home-price {

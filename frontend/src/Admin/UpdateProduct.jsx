@@ -14,6 +14,7 @@ import {
   updateProduct,
 } from "../features/admin/adminSlice";
 import { toast } from "react-toastify";
+import { compressImage } from "../utils/imageResizer";
 
 function UpdateProduct() {
   const [name, setName] = useState("");
@@ -47,37 +48,39 @@ function UpdateProduct() {
     }
   }, [product]);
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const files = Array.from(e.target.files);
 
     setImage([]);
     setImagePreview([]);
 
-    files.forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setImagePreview((prevImages) => [...prevImages, reader.result]);
-          setImage((prevImages) => [...prevImages, reader.result]);
-        }
-      };
-      reader.readAsDataURL(file);
-    });
+    try {
+      const compressedImages = await Promise.all(
+        files.map((file) => compressImage(file, 800, 800, 0.8))
+      );
+      
+      setImage(compressedImages);
+      setImagePreview(compressedImages);
+    } catch (err) {
+      toast.error("Failed to compress images", { position: "top-center" });
+    }
   };
 
   const updateProductSubmit = (e) => {
     e.preventDefault();
-    // Create product object with form data
-    const myForm = new FormData();
-    myForm.append("name", name);
-    myForm.append("price", price);
-    myForm.append("description", description);
-    myForm.append("category", category);
-    myForm.append("stock", stock);
-    image.forEach((img) => myForm.append("image", img));
+    
+    // Create product object with JSON data instead of FormData
+    const productData = {
+      name,
+      price,
+      description,
+      category,
+      stock,
+      image,
+    };
 
     // Send product data to server
-    dispatch(updateProduct({ id, productData: myForm }));
+    dispatch(updateProduct({ id, productData }));
   };
 
   useEffect(() => {

@@ -4,12 +4,9 @@ import PageTitle from "../components/PageTitle";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  createProduct,
-  removeErrors,
-  removeSuccess,
-} from "../features/admin/adminSlice";
+import { createProduct, removeErrors, removeSuccess } from "../features/admin/adminSlice";
 import { toast } from "react-toastify";
+import { compressImage } from "../utils/imageResizer";
 
 function CreateProduct() {
   const { success, loading, error } = useSelector((state) => state.admin);
@@ -41,22 +38,23 @@ function CreateProduct() {
     dispatch(createProduct(productData));
   };
 
-  const createProductImage = (e) => {
+  const createProductImage = async (e) => {
     const files = Array.from(e.target.files);
 
     setImage([]);
     setImagePreview([]);
 
-    files.forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setImagePreview((prevImages) => [...prevImages, reader.result]);
-          setImage((prevImages) => [...prevImages, reader.result]);
-        }
-      };
-      reader.readAsDataURL(file);
-    });
+    // Process files sequentially or in parallel natively
+    try {
+      const compressedImages = await Promise.all(
+        files.map((file) => compressImage(file, 800, 800, 0.8))
+      );
+      
+      setImage(compressedImages);
+      setImagePreview(compressedImages);
+    } catch (err) {
+      toast.error("Failed to compress images", { position: "top-center" });
+    }
   };
 
   useEffect(() => {
