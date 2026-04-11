@@ -24,12 +24,12 @@ export const createProduct = createAsyncThunk(
     // ← fixed
     try {
       const { data } = await api.post("/admin/product/create", productData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Type": "application/json" },
       });
       return data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data || "Error in creating a product",
+        error.response?.data?.message || error.response?.data || "Error in creating a product",
       );
     }
   },

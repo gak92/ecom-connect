@@ -66,11 +66,11 @@ app.use("/api/", limiter);
 
 // ── Core Middleware ───────────────────────────────────────────────────────────
 
-// Parse JSON bodies with a 10mb limit
-app.use(express.json({ limit: "10mb" }));
+// Parse JSON bodies with a 50mb limit
+app.use(express.json({ limit: "50mb" }));
 
 // Parse URL-encoded bodies
-app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 
 // Parse cookies
 app.use(cookieParser());

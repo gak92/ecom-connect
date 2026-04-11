@@ -27,17 +27,19 @@ function CreateProduct() {
 
   const createProductSubmit = (e) => {
     e.preventDefault();
-    // Create product object with form data
-    const myForm = new FormData();
-    myForm.append("name", name);
-    myForm.append("price", price);
-    myForm.append("description", description);
-    myForm.append("category", category);
-    myForm.append("stock", stock);
-    image.forEach((img) => myForm.append("image", img));
+    // Create product object with JSON data instead of FormData
+    // Since images are already base64 strings, JSON is cleaner
+    const productData = {
+      name,
+      price,
+      description,
+      category,
+      stock,
+      image,
+    };
 
     // Send product data to server
-    dispatch(createProduct(myForm));
+    dispatch(createProduct(productData));
   };
 
   const createProductImage = (e) => {
