@@ -148,19 +148,9 @@ function App() {
             element={<ProtectedRoute element={<ReviewsList />} adminOnly />}
           />
         </Routes>
-
-        {/* UserDashboard is a sidebar/overlay — rendered outside Routes */}
-        <UserDashboardWrapper />
       </Suspense>
     </Router>
   );
-}
-
-// Separate component so useSelector works (React hooks require component scope)
-function UserDashboardWrapper() {
-  const { isAuthenticated, user } = useSelector((state) => state.user);
-  if (!isAuthenticated) return null;
-  return <UserDashboard user={user} />;
 }
 
 export default App;

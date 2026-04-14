@@ -141,6 +141,11 @@
   background: var(--primary-dark);
 }
 
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
 /* ── Hamburger ── */
 
 .navbar-hamburger {
@@ -186,8 +191,11 @@
   }
 
   .navbar-hamburger {
-    display: block;
-    margin-left: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0.5rem;
+    flex-shrink: 0;
   }
 }
 

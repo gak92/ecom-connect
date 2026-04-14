@@ -6,13 +6,14 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
+import UserDashboard from "../User/UserDashboard";
 import "./Search.css";
 import { useSelector } from "react-redux";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const { isAuthenticated } = useSelector((state) => state.user);
+  const { isAuthenticated, user } = useSelector((state) => state.user);
   const { cartItems } = useSelector((state) => state.cart);
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -89,7 +90,9 @@ function Navbar() {
             </Link>
           </div>
 
-          {!isAuthenticated && (
+          {isAuthenticated ? (
+            <UserDashboard user={user} />
+          ) : (
             <Link to="/register" className="register-link">
               <PersonAddIcon className="icon" />
             </Link>
