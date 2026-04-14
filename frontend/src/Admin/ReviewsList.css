@@ -1,117 +1,114 @@
-/* ── Reviews List Admin ──────────────────────────────────────── */
-
-.reviewsList-container {
-  padding: 30px;
+.reviews-list-container {
   background-color: var(--bg-secondary);
+  padding: 30px;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--border-color);
-  min-height: calc(100vh - 120px);
-  margin: 90px 30px 30px;
-  display: flex;
-  flex-direction: column;
 }
 
-.reviewsList-form {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 30px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+.reviews-list-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 25px;
+  border-bottom: 2px solid var(--primary-main);
+  padding-bottom: 10px;
+  display: inline-block;
 }
 
-.reviewsList-submit-btn {
-  padding: 10px 20px;
-  background: var(--primary-main);
-  color: var(--text-light);
-  border: none;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  height: 48px;
-  font-size: 16px;
-  font-weight: 500;
-  transition: var(--transition-fast);
-}
-
-.reviewsList-submit-btn:hover {
-  background: var(--primary-dark);
-}
-
-.reviewsList-table-container {
-  margin-top: 10px;
-  overflow-x: auto;
-}
-
-.reviewsList-table {
+.reviews-table {
   width: 100%;
   border-collapse: collapse;
-  background-color: var(--bg-secondary);
+  margin-bottom: 30px;
 }
 
-.reviewsList-table th,
-.reviewsList-table td {
-  text-align: left;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.reviewsList-table th {
+.reviews-table th {
   background-color: var(--bg-primary);
   color: var(--text-secondary);
   font-weight: 600;
-  text-transform: uppercase;
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 2px solid var(--border-color);
   font-size: 0.85rem;
+  text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
-.reviewsList-table td {
+.reviews-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
   color: var(--text-primary);
   font-size: 0.95rem;
+  vertical-align: middle;
 }
 
-.reviewsList-table tr:hover td {
+.reviews-table tr:hover td {
   background-color: var(--bg-primary);
 }
 
-.delete-icon {
-  color: var(--error);
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  padding: 6px;
-  border-radius: var(--radius-sm);
-  transition: var(--transition-fast);
-}
-
-.delete-icon:hover {
-  background-color: rgba(231, 76, 60, 0.1);
-}
-
-.no-admin-products {
-  text-align: center;
-  padding: 40px;
-  background-color: var(--bg-primary);
-  color: var(--text-secondary);
+.product-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
   border-radius: var(--radius-md);
-  border: 1px dashed var(--border-color);
-  margin-top: 20px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-xs);
+}
+
+.action-btn {
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: var(--transition-fast);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.view-btn {
+  background-color: rgba(52, 152, 219, 0.1);
+  color: #3498db;
+}
+
+.view-btn:hover {
+  background-color: #3498db;
+  color: white;
+}
+
+.delete-btn {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: var(--error);
+  padding: 8px;
+}
+
+.delete-btn:hover {
+  background-color: var(--error);
+  color: white;
+}
+
+.reviews-details {
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 1px dashed var(--border-color);
+}
+
+.reviews-details h2 {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-bottom: 20px;
 }
 
 @media (max-width: 768px) {
-  .reviewsList-container {
-    margin: 80px 15px 20px;
-    padding: 20px;
+  .reviews-list-container {
+    padding: 15px;
   }
-
-  .reviewsList-form {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .reviewsList-submit-btn {
-    width: 100%;
+  
+  .reviews-table {
+    display: block;
+    overflow-x: auto;
   }
 }
