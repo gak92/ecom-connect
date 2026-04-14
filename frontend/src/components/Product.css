@@ -39,8 +39,6 @@
   box-shadow: var(--shadow-sm);
   text-align: left;
   width: 100%;
-  max-width: 280px;
-  margin: 0 auto;
   transition: var(--transition-normal);
   display: flex;
   flex-direction: column;
