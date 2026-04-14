@@ -7,6 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { createProduct, removeErrors, removeSuccess } from "../features/admin/adminSlice";
 import { toast } from "react-toastify";
 import { compressImage } from "../utils/imageResizer";
+import { categories } from "../utils/categories";
+import AdminLayout from "./AdminLayout";
+
+
 
 function CreateProduct() {
   const { success, loading, error } = useSelector((state) => state.admin);
@@ -19,7 +23,6 @@ function CreateProduct() {
   const [image, setImage] = useState([]);
   const [imagePreview, setImagePreview] = useState([]);
 
-  const categories = ["Electronics", "Clothing", "Home & Kitchen", "Books"];
 
   const createProductSubmit = (e) => {
     e.preventDefault();
@@ -84,9 +87,8 @@ function CreateProduct() {
   }, [dispatch, error, success]);
 
   return (
-    <>
+    <AdminLayout>
       <PageTitle title="Create Product" />
-      <Navbar />
 
       <div className="create-product-container">
         <h1 className="form-title">Create New Product</h1>
@@ -170,9 +172,7 @@ function CreateProduct() {
           </button>
         </form>
       </div>
-
-      <Footer />
-    </>
+    </AdminLayout>
   );
 }
 

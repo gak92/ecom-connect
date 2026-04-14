@@ -15,6 +15,8 @@ import {
 } from "../features/admin/adminSlice";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
+import AdminLayout from "./AdminLayout";
+
 
 function UsersList() {
   const { users, loading, error, message } = useSelector(
@@ -59,9 +61,8 @@ function UsersList() {
   }, [dispatch, message, error]);
 
   return (
-    <>
+    <AdminLayout>
       <PageTitle title="Users List" />
-      <Navbar />
 
       {loading ? (
         <Loader />
@@ -109,9 +110,7 @@ function UsersList() {
           </div>
         </div>
       )}
-
-      <Footer />
-    </>
+    </AdminLayout>
   );
 }
 

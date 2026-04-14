@@ -13,6 +13,7 @@ import {
   removeSuccess,
   updateOrderStatus,
 } from "../features/admin/adminSlice";
+import AdminLayout from "./AdminLayout";
 
 function UpdateOrder() {
   const [status, setStatus] = useState("");
@@ -83,9 +84,8 @@ function UpdateOrder() {
   }, [dispatch, success, error, orderId]);
 
   return (
-    <>
+    <AdminLayout>
       <PageTitle title="Update Order" />
-      <Navbar />
       {loading ? (
         <Loader />
       ) : (
@@ -168,9 +168,7 @@ function UpdateOrder() {
           </div>
         </div>
       )}
-
-      <Footer />
-    </>
+    </AdminLayout>
   );
 }
 

@@ -16,6 +16,8 @@ import {
 } from "../features/admin/adminSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import AdminLayout from "./AdminLayout";
+
 
 function ReviewsList() {
   const { products, loading, error, reviews, success, message } = useSelector(
@@ -67,17 +69,19 @@ function ReviewsList() {
 
   if (!products || products.length === 0) {
     return (
-      <div className="reviews-list-container">
-        <h1 className="reviews-list-title">Admin Reviews</h1>
-        <p>No Product Found</p>
-      </div>
+      <AdminLayout>
+        <PageTitle title="Reviews List" />
+        <div className="reviews-list-container">
+          <h1 className="reviews-list-title">Admin Reviews</h1>
+          <p>No Product Found</p>
+        </div>
+      </AdminLayout>
     );
   }
 
   return (
-    <>
+    <AdminLayout>
       <PageTitle title="Reviews List" />
-      <Navbar />
       {loading ? (
         <Loader />
       ) : (
@@ -161,9 +165,7 @@ function ReviewsList() {
           )}
         </div>
       )}
-
-      <Footer />
-    </>
+    </AdminLayout>
   );
 }
 

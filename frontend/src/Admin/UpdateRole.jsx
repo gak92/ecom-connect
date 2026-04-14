@@ -13,6 +13,8 @@ import {
   updateUserRole,
 } from "../features/admin/adminSlice";
 import { toast } from "react-toastify";
+import AdminLayout from "./AdminLayout";
+
 
 function UpdateRole() {
   const { userId } = useParams();
@@ -72,9 +74,8 @@ function UpdateRole() {
   }, [dispatch, success, error]);
 
   return (
-    <>
+    <AdminLayout>
       <PageTitle title="Update User Role" />
-      <Navbar />
 
       {loading ? (
         <Loader />
@@ -124,9 +125,7 @@ function UpdateRole() {
           </div>
         </div>
       )}
-
-      <Footer />
-    </>
+    </AdminLayout>
   );
 }
 

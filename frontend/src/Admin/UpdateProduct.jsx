@@ -15,6 +15,9 @@ import {
 } from "../features/admin/adminSlice";
 import { toast } from "react-toastify";
 import { compressImage } from "../utils/imageResizer";
+import { categories } from "../utils/categories";
+import AdminLayout from "./AdminLayout";
+
 
 function UpdateProduct() {
   const [name, setName] = useState("");
@@ -31,7 +34,6 @@ function UpdateProduct() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  const categories = ["Electronics", "Clothing", "Home & Kitchen", "Books"];
 
   useEffect(() => {
     dispatch(getProductDetails(id));
@@ -103,9 +105,8 @@ function UpdateProduct() {
   }, [dispatch, success, error]);
 
   return (
-    <>
+    <AdminLayout>
       <PageTitle title="Update Product" />
-      <Navbar />
 
       <div className="update-product-wrapper">
         <h1 className="update-product-title">Update Product</h1>
@@ -215,9 +216,7 @@ function UpdateProduct() {
           </button>
         </form>
       </div>
-
-      <Footer />
-    </>
+    </AdminLayout>
   );
 }
 

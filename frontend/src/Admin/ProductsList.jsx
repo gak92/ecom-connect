@@ -15,6 +15,8 @@ import { toast } from "react-toastify";
 import Loader from "../components/Loader";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import AdminLayout from "./AdminLayout";
+
 
 function ProductsList() {
   const { products, loading, error, deleting } = useSelector(
@@ -54,21 +56,23 @@ function ProductsList() {
 
   if (!products || products.length === 0) {
     return (
-      <div className="product-list-container">
-        <h1 className="product-list-title">Admin Products</h1>
-        <p className="no-admin-products">No Products</p>
-      </div>
+      <AdminLayout>
+        <PageTitle title="Products List" />
+        <div className="product-list-container">
+          <h1 className="product-list-title">Admin Products</h1>
+          <p className="no-admin-products">No Products</p>
+        </div>
+      </AdminLayout>
     );
   }
 
   return (
-    <>
+    <AdminLayout>
       {loading ? (
         <Loader />
       ) : (
         <>
           <PageTitle title="Products List" />
-          <Navbar />
           <div className="product-list-container">
             <h1 className="product-list-title">All Products</h1>
             <table className="product-table">
@@ -126,7 +130,7 @@ function ProductsList() {
           <Footer />
         </>
       )}
-    </>
+    </AdminLayout>
   );
 }
 

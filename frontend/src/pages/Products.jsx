@@ -12,6 +12,8 @@ import Loader from "../components/Loader";
 import { useLocation, useNavigate } from "react-router-dom";
 import NoProduct from "../components/NoProduct";
 import Pagination from "../components/Pagination";
+import { categories } from "../utils/categories";
+
 
 function Products() {
   const { loading, error, products, resultPerPage, productCount } = useSelector(
@@ -30,7 +32,6 @@ function Products() {
   const [currentPage, setCurrentPage] = useState(pageFromURL);
   const navigate = useNavigate();
 
-  const categories = ["laptop", "mobile", "tv", "fruits", "glass"];
 
   useEffect(() => {
     dispatch(getProduct({ keyword, page: currentPage, category }));

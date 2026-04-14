@@ -15,6 +15,8 @@ import {
 } from "../features/admin/adminSlice";
 import Loader from "../components/Loader";
 import { toast } from "react-toastify";
+import AdminLayout from "./AdminLayout";
+
 
 function OrdersList() {
   const { orders, loading, error, success, message } = useSelector(
@@ -51,16 +53,18 @@ function OrdersList() {
 
   if (orders && orders.length === 0) {
     return (
-      <div className="no-orders-container">
-        <p>No orders found.</p>
-      </div>
+      <AdminLayout>
+        <PageTitle title="Orders List" />
+        <div className="no-orders-container">
+          <p>No orders found.</p>
+        </div>
+      </AdminLayout>
     );
   }
 
   return (
-    <>
+    <AdminLayout>
       <PageTitle title="Orders List" />
-      <Navbar />
 
       {loading ? (
         <Loader />
@@ -112,9 +116,7 @@ function OrdersList() {
           </div>
         </div>
       )}
-
-      <Footer />
-    </>
+    </AdminLayout>
   );
 }
 
