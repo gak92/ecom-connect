@@ -85,8 +85,20 @@
 ### Admin Dashboard
 ![Admin Dashboard](./app%20images/Admin%20Dashboard.PNG)
 
-### All Products
+### All Products (Admin)
+![All Products Admin](./app%20images/All%20Products%20-%20Admin%20Dashboard.PNG)
+
+### Create Products (Admin)
+![Create Products Admin](./app%20images/Create%20Products%20-%20Admin%20Dashboard.PNG)
+
+### All Reviews (Admin)
+![All Reviews Admin](./app%20images/All%20Reviews%20-%20Admin%20Dashboard.PNG)
+
+### All Products (Storefront)
 ![All Products](./app%20images/All%20Products.PNG)
+
+### Product Detail Page
+![Product Detail](./app%20images/Product%20Detail%20Page.PNG)
 
 ### Cart Page
 ![Cart Page](./app%20images/Cart%20Page.PNG)
