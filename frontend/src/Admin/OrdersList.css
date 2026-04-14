@@ -54,13 +54,13 @@
 }
 
 .order-status {
-  padding: 3px 10px;
+  padding: 2px 8px;
   border-radius: 20px;
   font-weight: 700;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   display: inline-block;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
 }
 
 .order-status.processing {
