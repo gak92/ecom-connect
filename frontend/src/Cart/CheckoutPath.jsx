@@ -23,17 +23,28 @@ function CheckoutPath({ activePath }) {
   ];
 
   return (
-    <div className="checkoutPath">
+    <div className="checkout-path">
       {path.map((item, index) => (
-        <div
-          className="checkoutPath-step"
-          key={index}
-          active={activePath === index ? "true" : "false"}
-          completed={activePath >= index ? "true" : "false"}
-        >
-          <p className="checkoutPath-icon">{item.icon}</p>
-          <p className="checkoutPath-label">{item.label}</p>
-        </div>
+        <React.Fragment key={index}>
+          <div
+            className={`step-container ${activePath === index ? "active" : ""} ${
+              activePath > index ? "completed" : ""
+            }`}
+          >
+            <div className="step-number">{index + 1}</div>
+            <div className="step-label">
+              <span className="step-icon">{item.icon}</span>
+              {item.label}
+            </div>
+          </div>
+          {index < path.length - 1 && (
+            <div
+              className={`step-connector ${
+                activePath > index ? "completed" : ""
+              }`}
+            ></div>
+          )}
+        </React.Fragment>
       ))}
     </div>
   );

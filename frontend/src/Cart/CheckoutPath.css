@@ -4,10 +4,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 15px;
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 20px;
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 6.5rem auto 2rem; /* Clears the 4.5rem fixed Navbar */
+  padding: 1.5rem 2rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
 }
 
 .step-container {
@@ -32,12 +36,21 @@
 }
 
 .step-label {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 600;
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   transition: var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.step-icon {
+  font-size: 1.25rem;
+  margin-bottom: 2px;
 }
 
 .step-container.active .step-number {
@@ -74,12 +87,24 @@
 
 @media (max-width: 768px) {
   .checkout-path {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
+    margin-top: 6rem;
+    gap: 0.75rem;
+    padding: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
   }
   
+  .step-label {
+    font-size: 0.7rem;
+  }
+
+  .step-number {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+  }
+
   .step-connector {
-    display: none;
+    min-width: 20px;
   }
 }

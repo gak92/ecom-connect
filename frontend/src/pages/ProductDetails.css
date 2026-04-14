@@ -83,11 +83,20 @@
   text-align: left;
 }
 
-.product-description {
+/* Use higher specificity to override potential conflicts from Product.css */
+.product-info .product-description {
   color: var(--text-secondary);
   font-size: 1rem;
   line-height: 1.6;
-  margin: 1rem 0;
+  margin: 1.25rem 0;
+  text-align: left;
+  /* Reset any truncation from card styles */
+  display: block;
+  -webkit-line-clamp: initial;
+  -webkit-box-orient: initial;
+  overflow: visible;
+  height: auto;
+  min-height: auto;
 }
 
 .product-price {
